@@ -1,0 +1,218 @@
+# Definición de variables simples (texto / número) usadas en la plantilla
+# y metadatos de operaciones vinculadas.
+
+simple_variables:
+
+  # -------------------------------------------------------
+  # 1. Datos generales de ejercicio y compañía
+  # -------------------------------------------------------
+  - id: Organo
+    label: "Organo de administración"
+    marker: "<<Organo>>"
+    type: choice
+    choices: ["los Accionistas", "los Socios", "el Accionista Único", "el Socio Único", "el Patronato", "la Asamblea General de la Asociación", "la Asamblea General de Mutualistas", "la Comisión de Control"]          # se mostrará como input de texto corto
+
+  - id: nombre_entidad
+    label: "Nombre de la Entidad"
+    marker: "<<nombre_entidad>>"
+    type: "text"
+
+  - id: nombre_compania
+    label: "Nombre de la Compañía"
+    marker: "<<Nombre de la Compañía>>"
+    type: "text"
+
+  - id: actividad_principal
+    label: "Actividad principal de la Compañía"
+    marker: "<<Actividad principal>>"
+    type: "long_text"     # textarea en la UI
+
+  # Ejercicio anterior: no hay marcador en la plantilla,
+  # pero es necesario para la cabecera de la tabla de partidas contables.
+  - id: ejercicio_anterior
+    label: "Ejercicio comparativo anterior (p.ej. 2022)"
+    marker: null          # solo se usa para cálculos / tablas
+    type: "text"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  # -------------------------------------------------------
+  # 2. Documentación facilitada
+  # -------------------------------------------------------
+  - id: documentacion_1
+    label: "Documentación 1"
+    marker: "<<Documentación 1>>"
+    type: "text"
+    optional: true
+
+  - id: documentacion_2
+    label: "Documentación 2"
+    marker: "<<Documentación 2>>"
+    type: "text"
+    optional: true
+
+  - id: documentacion_3
+    label: "Documentación 3"
+    marker: "<<Documentación 3>>"
+    type: "text"
+    optional: true
+
+  - id: documentacion_4
+    label: "Documentación 4"
+    marker: "<<Documentación 4>>"
+    type: "text"
+    optional: true
+
+  # -------------------------------------------------------
+  # 3. Información cuantitativa de relevancia PT
+  # -------------------------------------------------------
+  - id: info_pt_ingresos_pct
+    label: "Porcentaje de ingresos vinculados sobre la actividad de la Compañía"
+    marker: "<<Tablas Información PT Compañía1>>"
+    type: "percent"
+
+  - id: info_pt_gastos_pct
+    label: "Porcentaje de gastos vinculados sobre los gastos operativos"
+    marker: "<<Tablas Información PT Compañía2>>"
+    type: "percent"
+
+  - id: relevancia_operaciones_texto
+    label: "Texto sobre relevancia de las operaciones intragrupo"
+    marker: "<<Editar en el word segun corresponda>>"
+    type: "long_text"
+
+  # -------------------------------------------------------
+  # 4. Datos de contacto / firma
+  # -------------------------------------------------------
+  - id: nombre_revisor
+    label: "Nombre del revisor"
+    marker: "<<Nombre del revisor>>"
+    type: "text"
+
+  - id: email_revisor
+    label: "Email del revisor"
+    marker: "<<Email revisor>>"
+    type: "email"
+
+
+# =========================================================
+# OPERACIONES VINCULADAS
+# =========================================================
+# Definición centralizada de las operaciones intragrupo.
+# Cada operación tiene:
+#   - un marcador de texto dentro del memo (<<Operación 1>>, etc.),
+#   - su tabla TNMM específica (<<Tabla Operación 1>>),
+#   - y una fila asociada en la tabla de operaciones vinculadas.
+#
+# La app puede usar esta sección para:
+#   * generar la lista en el texto,
+#   * precargar/nombrar filas en la tabla "operaciones_vinculadas",
+#   * y enlazar con la tabla TNMM de cada operación.
+
+operations:
+  base_text_marker_pattern: "<<Operación {n}>>"
+  base_tnmm_table_marker_pattern: "<<Tabla Operación {n}>>"
+  max_operations: 10       # se puede ampliar si hiciera falta
+  optional: true           # las operaciones son opcionales
+
+  items:
+    - id: operacion_1
+      index: 1
+      default_label: "Operación 1"
+      text_marker: "<<Operación 1>>"
+      tnmm_table_marker: "<<Tabla Operación 1>>"
+      vinculadas_row_hint: 1   # posición sugerida en la tabla operaciones vinculadas (opcional)
+      optional: true
+
+    - id: operacion_2
+      index: 2
+      default_label: "Operación 2"
+      text_marker: "<<Operación 2>>"
+      tnmm_table_marker: "<<Tabla Operación 2>>"
+      vinculadas_row_hint: 2
+      optional: true
+
+    - id: operacion_3
+      index: 3
+      default_label: "Operación 3"
+      text_marker: "<<Operación 3>>"
+      tnmm_table_marker: "<<Tabla Operación 3>>"
+      vinculadas_row_hint: 3
+      optional: true
+
+    - id: operacion_4
+      index: 4
+      default_label: "Operación 4"
+      text_marker: "<<Operación 4>>"
+      tnmm_table_marker: "<<Tabla Operación 4>>"
+      vinculadas_row_hint: 4
+      optional: true
+
+    - id: operacion_5
+      index: 5
+      default_label: "Operación 5"
+      text_marker: "<<Operación 5>>"
+      tnmm_table_marker: "<<Tabla Operación 5>>"
+      vinculadas_row_hint: 5
+      optional: true
+
+    - id: operacion_6
+      index: 6
+      default_label: "Operación 6"
+      text_marker: "<<Operación 6>>"
+      tnmm_table_marker: "<<Tabla Operación 6>>"
+      vinculadas_row_hint: 6
+      optional: true
+
+    - id: operacion_7
+      index: 7
+      default_label: "Operación 7"
+      text_marker: "<<Operación 7>>"
+      tnmm_table_marker: "<<Tabla Operación 7>>"
+      vinculadas_row_hint: 7
+      optional: true
+
+    - id: operacion_8
+      index: 8
+      default_label: "Operación 8"
+      text_marker: "<<Operación 8>>"
+      tnmm_table_marker: "<<Tabla Operación 8>>"
+      vinculadas_row_hint: 8
+      optional: true
+
+    - id: operacion_9
+      index: 9
+      default_label: "Operación 9"
+      text_marker: "<<Operación 9>>"
+      tnmm_table_marker: "<<Tabla Operación 9>>"
+      vinculadas_row_hint: 9
+      optional: true
+
+    - id: operacion_10
+      index: 10
+      default_label: "Operación 10"
+      text_marker: "<<Operación 10>>"
+      tnmm_table_marker: "<<Tabla Operación 10>>"
+      vinculadas_row_hint: 10
+      optional: true

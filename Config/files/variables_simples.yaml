@@ -1,0 +1,452 @@
+# Variables Simples - Sistema de Generación de Informes de Auditoría
+# Configuración de variables que el usuario debe completar
+
+variables_simples:
+  
+  # ==================== VARIABLES TIPO LISTA (DROPDOWN) ====================
+  
+  - id: destinatarios_informe
+    nombre: "Destinatarios del informe (administradores)"
+    tipo: lista
+    opciones:
+      - "los administradores"
+      - "el administrador único"
+      - "el Patronato"
+      - "la Junta Directiva"
+    requerido: true
+    seccion: "Información general"
+    
+  - id: destinatarios_accionistas
+    nombre: "Destinatarios (accionistas/socios)"
+    tipo: lista
+    opciones:
+      - "los Accionistas"
+      - "los Socios"
+      - "el Accionista Único"
+      - "el Socio Único"
+      - "el Patronato"
+      - "la Asamblea General de la Asociación"
+      - "la Asamblea General de Mutualistas"
+      - "la Comisión de Control"
+    requerido: true
+    seccion: "Información general"
+    
+  - id: tipo_junta_nombramiento
+    nombre: "Tipo de Junta que nombró al auditor"
+    tipo: lista
+    opciones:
+      - "de Accionistas"
+      - "General"
+      - "de Socios"
+    requerido: false
+    seccion: "Información de auditoría"
+    
+  # ==================== VARIABLES TIPO TEXTO ====================
+  
+  - id: nombre_entidad
+    nombre: "Nombre de la entidad"
+    tipo: texto
+    requerido: true
+    placeholder: "Ej: ABC Sociedad Anónima"
+    seccion: "Información de la entidad"
+    
+  - id: entidad_encargante
+    nombre: "Entidad que encarga la auditoría (si aplica)"
+    tipo: texto
+    requerido: false
+    placeholder: "Solo completar si la auditoría es voluntaria"
+    seccion: "Información de la entidad"
+    dependencia:
+      variable: tipo_auditoria
+      valor: "Voluntaria"
+    
+  - id: ciudad_auditoria
+    nombre: "Ciudad donde se emite el informe"
+    tipo: texto
+    requerido: true
+    placeholder: "Ej: Madrid"
+    seccion: "Información del auditor"
+    
+  - id: firma_auditor
+    nombre: "Nombre de la firma auditora"
+    tipo: texto
+    requerido: true
+    placeholder: "Ej: Forvis Mazars España"
+    seccion: "Información del auditor"
+    
+  - id: nombre_auditor
+    nombre: "Nombre del auditor individual"
+    tipo: texto
+    requerido: true
+    placeholder: "Nombre completo del auditor firmante"
+    seccion: "Información del auditor"
+    
+  # ==================== VARIABLES TIPO NÚMERO ====================
+  
+  - id: numero_nota_marco
+    nombre: "Número de nota que identifica el marco normativo"
+    tipo: numero
+    requerido: false
+    placeholder: "Ej: 2"
+    seccion: "Referencias a notas"
+    dependencia:
+      variable: marco_normativo
+      valor_no: "NIIF-UE"
+    
+  - id: numero_roac_auditor
+    nombre: "Número ROAC de la firma auditora"
+    tipo: texto
+    requerido: true
+    placeholder: "Ej: S0702"
+    seccion: "Información del auditor"
+    
+  - id: numero_roac_individual
+    nombre: "Número ROAC del auditor individual"
+    tipo: texto
+    requerido: true
+    placeholder: "Ej: 12345"
+    seccion: "Información del auditor"
+    
+  - id: periodo_auditoria
+    nombre: "Período de contratación como auditor (en años)"
+    tipo: numero
+    requerido: false
+    placeholder: "Ej: 3"
+    seccion: "Información de auditoría"
+    dependencia:
+      variable: tipo_entidad
+      valor: "EIP"
+    
+  - id: periodo_anterior
+    nombre: "Período anterior de auditoría (en años)"
+    tipo: numero
+    requerido: false
+    placeholder: "Ej: 5"
+    seccion: "Información de auditoría"
+    dependencia:
+      variable: tipo_entidad
+      valor: "EIP"
+    
+  - id: numero_nota_kam
+    nombre: "Número de nota relacionada con KAM/AMRA"
+    tipo: numero
+    requerido: false
+    placeholder: "Ej: 15"
+    seccion: "Referencias a notas"
+    
+  # ==================== VARIABLES TIPO FECHA (AGRUPADAS) ====================
+  
+  - id: fecha_cierre_ejercicio
+    nombre: "Fecha de cierre del ejercicio"
+    tipo: fecha
+    requerido: true
+    componentes:
+      - id: dia_cierre_ejercicio
+        tipo: numero
+        min: 1
+        max: 31
+      - id: mes_cierre_ejercicio
+        tipo: texto
+        placeholder: "diciembre"
+      - id: ano_cierre_ejercicio
+        tipo: numero
+        placeholder: "2024"
+    seccion: "Fechas del ejercicio"
+    
+  - id: fecha_informe_auditoria
+    nombre: "Fecha de emisión del informe de auditoría"
+    tipo: fecha
+    requerido: true
+    componentes:
+      - id: dia_informe_auditoria
+        tipo: numero
+        min: 1
+        max: 31
+      - id: mes_informe_auditoria
+        tipo: texto
+        placeholder: "marzo"
+      - id: ano_informe_auditoria
+        tipo: numero
+        placeholder: "2025"
+    seccion: "Fechas del informe"
+    
+  - id: fecha_informe_adicional
+    nombre: "Fecha del informe adicional para comisión de auditoría"
+    tipo: fecha
+    requerido: false
+    componentes:
+      - id: dia_informe_adicional
+        tipo: numero
+        min: 1
+        max: 31
+      - id: mes_informe_adicional
+        tipo: texto
+        placeholder: "marzo"
+      - id: ano_informe_adicional
+        tipo: numero
+        placeholder: "2025"
+    seccion: "Fechas del informe"
+    dependencia:
+      variable: tipo_entidad
+      valor: "EIP"
+    
+  - id: fecha_nombramiento
+    nombre: "Fecha de nombramiento como auditor"
+    tipo: fecha
+    requerido: false
+    componentes:
+      - id: dia_nombramiento
+        tipo: numero
+        min: 1
+        max: 31
+      - id: mes_nombramiento
+        tipo: texto
+      - id: ano_nombramiento
+        tipo: numero
+    seccion: "Información de auditoría"
+    dependencia:
+      variable: tipo_entidad
+      valor: "EIP"
+    
+  - id: fecha_inicio_periodo
+    nombre: "Fecha de inicio del período de auditoría"
+    tipo: fecha
+    requerido: false
+    componentes:
+      - id: dia_inicio_periodo
+        tipo: numero
+        min: 1
+        max: 31
+      - id: mes_inicio_periodo
+        tipo: texto
+      - id: ano_inicio_periodo
+        tipo: numero
+    seccion: "Información de auditoría"
+    dependencia:
+      variable: tipo_entidad
+      valor: "EIP"
+    
+  - id: fecha_inicio_auditoria_anterior
+    nombre: "Fecha de inicio de auditoría anterior"
+    tipo: fecha
+    requerido: false
+    componentes:
+      - id: dia_inicio_auditoria_anterior
+        tipo: numero
+        min: 1
+        max: 31
+      - id: mes_inicio_auditoria_anterior
+        tipo: texto
+      - id: ano_inicio_auditoria_anterior
+        tipo: numero
+    seccion: "Información de auditoría"
+    dependencia:
+      variable: tipo_entidad
+      valor: "EIP"
+    
+  - id: fecha_informe_auditoria_ejercicioanterior
+    nombre: "Fecha del informe de auditoría del ejercicio anterior"
+    tipo: fecha
+    requerido: false
+    componentes:
+      - id: dia_informe_auditoria_ejercicioanterior
+        tipo: numero
+        min: 1
+        max: 31
+      - id: mes_informe_auditoria_ejercicioanterior
+        tipo: texto
+      - id: ano_informe_auditoria_ejercicioanterior
+        tipo: numero
+    seccion: "Información ejercicio anterior"
+    dependencia:
+      variable: otras_cuestiones
+      valor: "si"
+    
+  # ==================== VARIABLES LOCALES (ESPECÍFICAS DE CONDICIONES) ====================
+  
+  - id: numero_nota_incorreccion
+    nombre: "Número de nota sobre la incorrección material"
+    tipo: numero
+    requerido: false
+    placeholder: "Ej: 18"
+    seccion: "Referencias a notas"
+    ambito: local
+    condicion_padre: "tipo_opinion=='salvedades' AND motivo_calificacion=='incorreccion'"
+    
+  - id: numero_nota_limitacion
+    nombre: "Número de nota sobre la limitación al alcance"
+    tipo: numero
+    requerido: false
+    placeholder: "Ej: 20"
+    seccion: "Referencias a notas"
+    ambito: local
+    condicion_padre: "tipo_opinion=='salvedades' AND motivo_calificacion=='limitacion'"
+    
+  - id: numero_nota_desfavorable
+    nombre: "Número de nota relacionada con opinión desfavorable"
+    tipo: numero
+    requerido: false
+    placeholder: "Ej: 25"
+    seccion: "Referencias a notas"
+    ambito: local
+    condicion_padre: "tipo_opinion=='desfavorable'"
+    
+  - id: numero_nota_denegada
+    nombre: "Número de nota relacionada con denegación de opinión"
+    tipo: numero
+    requerido: false
+    placeholder: "Ej: 30"
+    seccion: "Referencias a notas"
+    ambito: local
+    condicion_padre: "tipo_opinion=='denegada'"
+    
+  - id: ano_cierre_ejercicio_anterior
+    nombre: "Año de cierre del ejercicio anterior"
+    tipo: numero
+    requerido: false
+    placeholder: "2023"
+    seccion: "Fechas del ejercicio"
+    ambito: local
+    condicion_padre: "tipo_opinion=='denegada'"
+    
+  - id: dia_evento_incertidumbre
+    nombre: "Día del evento de incertidumbre"
+    tipo: numero
+    min: 1
+    max: 31
+    requerido: false
+    seccion: "Eventos específicos"
+    ambito: local
+    condicion_padre: "tipo_opinion=='denegada'"
+    
+  - id: mes_evento_incertidumbre
+    nombre: "Mes del evento de incertidumbre"
+    tipo: texto
+    requerido: false
+    seccion: "Eventos específicos"
+    ambito: local
+    condicion_padre: "tipo_opinion=='denegada'"
+    
+  - id: ano_evento_incertidumbre
+    nombre: "Año del evento de incertidumbre"
+    tipo: numero
+    requerido: false
+    seccion: "Eventos específicos"
+    ambito: local
+    condicion_padre: "tipo_opinion=='denegada'"
+    
+  - id: numero_nota_funcionamiento
+    nombre: "Número de nota sobre empresa en funcionamiento"
+    tipo: numero
+    requerido: false
+    placeholder: "Ej: 1"
+    seccion: "Referencias a notas"
+    ambito: local
+    condicion_padre: "incertidumbre_funcionamiento=='si'"
+    
+  - id: monto_perdidas
+    nombre: "Monto de pérdidas netas (en miles de euros)"
+    tipo: numero
+    requerido: false
+    placeholder: "Ej: 500"
+    seccion: "Información financiera"
+    ambito: local
+    condicion_padre: "incertidumbre_funcionamiento=='si'"
+    
+  - id: monto_exceso_pasivo
+    nombre: "Exceso de pasivo corriente sobre activo corriente (en miles de euros)"
+    tipo: numero
+    requerido: false
+    placeholder: "Ej: 1200"
+    seccion: "Información financiera"
+    ambito: local
+    condicion_padre: "incertidumbre_funcionamiento=='si'"
+    
+  - id: numero_nota_enfasis
+    nombre: "Número de nota para párrafo de énfasis"
+    tipo: numero
+    requerido: false
+    placeholder: "Ej: 12"
+    seccion: "Referencias a notas"
+    ambito: local
+    condicion_padre: "enfasis_adicional=='si'"
+    
+  - id: ano_cierre_ejercicioanterior
+    nombre: "Año de cierre del ejercicio anterior"
+    tipo: numero
+    requerido: false
+    placeholder: "2023"
+    seccion: "Información ejercicio anterior"
+    ambito: local
+    condicion_padre: "otras_cuestiones=='si'"
+    
+  # ==================== VARIABLES TIPO TEXTO LIBRE (CONTENIDO DESCRIPTIVO) ====================
+  
+  - id: descripcion_incorreccion
+    nombre: "Descripción de la incorrección material"
+    tipo: texto_largo
+    requerido: false
+    placeholder: "Descripción detallada del incumplimiento o incorrección material en las cuentas"
+    ayuda: "Indicar [RI2] en el documento original"
+    seccion: "Descripciones técnicas"
+    ambito: local
+    condicion_padre: "tipo_opinion=='salvedades' AND motivo_calificacion=='incorreccion'"
+    
+  - id: descripcion_limitacion
+    nombre: "Descripción de la limitación al alcance"
+    tipo: texto_largo
+    requerido: false
+    placeholder: "Descripción de la operación o partida auditada con limitación"
+    seccion: "Descripciones técnicas"
+    ambito: local
+    condicion_padre: "tipo_opinion=='salvedades' AND motivo_calificacion=='limitacion'"
+    
+  - id: descripcion_desfavorable
+    nombre: "Descripción de la incorreción que motiva la opinión desfavorable"
+    tipo: texto_largo
+    requerido: false
+    placeholder: "Descripción de la incorreción material que motiva la opinión desfavorable"
+    seccion: "Descripciones técnicas"
+    ambito: local
+    condicion_padre: "tipo_opinion=='desfavorable'"
+    
+  - id: descripcion_kam_amra
+    nombre: "Descripción del riesgo de la Cuestión Clave/Aspecto Relevante"
+    tipo: texto_largo
+    requerido: false
+    placeholder: "Descripción del riesgo y de los motivos por los que se ha considerado CCA/AMRA"
+    seccion: "Descripciones técnicas"
+    
+  - id: procedimientos_auditoria_kam
+    nombre: "Procedimientos de auditoría aplicados"
+    tipo: texto_largo
+    requerido: false
+    placeholder: "Descripción de los procedimientos de auditoría realizados"
+    seccion: "Descripciones técnicas"
+    
+  - id: descripcion_enfasis
+    nombre: "Descripción de la cuestión objeto de énfasis"
+    tipo: texto_largo
+    requerido: false
+    placeholder: "Descripción de la cuestión objeto de énfasis"
+    seccion: "Descripciones técnicas"
+    ambito: local
+    condicion_padre: "enfasis_adicional=='si'"
+    
+  - id: descripcion_servicios_adicionales
+    nombre: "Descripción de servicios adicionales prestados"
+    tipo: texto_largo
+    requerido: false
+    placeholder: "Descripción de los servicios adicionales prestados distintos a auditoría"
+    seccion: "Información de auditoría"
+    ambito: local
+    condicion_padre: "tipo_entidad=='EIP'"
+
+# Configuración general
+configuracion:
+  version: "1.0"
+  validaciones:
+    - tipo: "fechas_coherentes"
+      mensaje: "Las fechas deben ser coherentes entre sí"
+    - tipo: "campos_requeridos"
+      mensaje: "Todos los campos marcados como requeridos deben completarse"

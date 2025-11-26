@@ -1,0 +1,270 @@
+En cada lugar que ponga "los administradores" poner: {{destinatarios_informe}}
+
+{{si tipo_cuentas=="consolidadas"}}Informe de Auditoría de Cuentas Anuales Consolidadas emitido por un Auditor Independiente{{fin si}}{{si tipo_cuentas=="abreviadas"}}Informe de Auditoría de Cuentas Anuales Abreviadas emitido por un Auditor Independiente{{fin si}}{{si tipo_cuentas=="normales"}}Informe de Auditoría de Cuentas Anuales emitido por un Auditor Independiente{{fin si}}
+
+A {{destinatarios_accionistas}} de {{nombre_entidad}}, {{si tipo_auditoria=="Voluntaria"}}por encargo de {{entidad_encargante}}{{fin si}}
+
+{{si tipo_entidad=="EIP"}}
+Informe sobre las cuentas anuales{{si tipo_cuentas=="consolidadas"}} consolidadas{{fin si}}
+{{fin si}}
+
+{{si tipo_opinion=="denegada"}}Denegación de opinión{{fin si}}{{si tipo_opinion=="desfavorable"}}Opinión desfavorable{{fin si}}{{si tipo_opinion=="salvedades"}}Opinión con salvedades{{fin si}}{{si tipo_opinion=="favorable"}}Opinión{{fin si}}
+
+Hemos auditado las {{si tipo_cuentas=="consolidadas"}}cuentas anuales consolidadas de {{nombre_entidad}} (la Sociedad dominante) y sus sociedades dependientes (el Grupo){{fin si}}{{si tipo_cuentas=="abreviadas"}}cuentas anuales abreviadas{{fin si}}{{si tipo_cuentas=="normales"}}cuentas anuales{{fin si}} de {{nombre_entidad}} ({{si tipo_cuentas=="consolidadas"}}la Sociedad dominante{{else}}la Entidad{{fin si}}), que comprenden {{si tipo_cuentas=="consolidadas"}}el estado de situación financiera a día {{dia_cierre_ejercicio}} de {{mes_cierre_ejercicio}} de {{ano_cierre_ejercicio}}, la cuenta de resultados, el estado del resultado global, el estado de cambios en el patrimonio neto, el estado de flujos de efectivo y la memoria, todos ellos consolidados{{fin si}}{{si tipo_cuentas=="abreviadas"}}el balance abreviado a día {{dia_cierre_ejercicio}} de {{mes_cierre_ejercicio}} de {{ano_cierre_ejercicio}}, la cuenta de pérdidas y ganancias abreviada y la memoria abreviada{{fin si}}{{si tipo_cuentas=="normales"}}el balance a día {{dia_cierre_ejercicio}} de {{mes_cierre_ejercicio}} de {{ano_cierre_ejercicio}}, la cuenta de pérdidas y ganancias, el estado de cambios en el patrimonio neto, el estado de flujos de efectivo y la memoria{{fin si}} correspondientes al ejercicio terminado en dicha fecha.
+
+{{si tipo_opinion=="favorable"}}
+En nuestra opinión, las {{si tipo_cuentas=="consolidadas"}}cuentas anuales consolidadas{{fin si}}{{si tipo_cuentas=="abreviadas"}}cuentas anuales abreviadas{{fin si}}{{si tipo_cuentas=="normales"}}cuentas anuales{{fin si}} adjuntas expresan, en todos los aspectos significativos, la imagen fiel del patrimonio y de la situación financiera {{si tipo_cuentas=="consolidadas"}}del Grupo{{else}}de la Entidad{{fin si}} a día {{dia_cierre_ejercicio}} de {{mes_cierre_ejercicio}} de {{ano_cierre_ejercicio}}, así como de sus resultados {{si tipo_cuentas=="consolidadas"}}y flujos de efectivo, todos ellos consolidados,{{else}}y flujos de efectivo{{fin si}} correspondientes al ejercicio terminado en dicha fecha, de conformidad con {{si marco_normativo=="NIIF-UE"}}las Normas Internacionales de Información Financiera, adoptadas por la Unión Europea (NIIF-UE), y demás disposiciones del marco normativo de información financiera que resultan de aplicación en España{{else}}el marco normativo de información financiera que resulta de aplicación (que se identifica en la nota {{numero_nota_marco}} de la memoria){{fin si}} y, en particular, con los principios y criterios contables contenidos en el mismo.
+{{fin si}}
+
+{{si tipo_opinion=="salvedades"}}
+En nuestra opinión, excepto por {{si limitacion_alcance=="si"}}los posibles efectos{{else}}los efectos{{fin si}} de la(s) cuestión(es) descrita(s) en la sección Fundamento de la opinión con salvedades de nuestro informe, las {{si tipo_cuentas=="consolidadas"}}cuentas anuales consolidadas{{fin si}}{{si tipo_cuentas=="abreviadas"}}cuentas anuales abreviadas{{fin si}}{{si tipo_cuentas=="normales"}}cuentas anuales{{fin si}} adjuntas expresan, en todos los aspectos significativos, la imagen fiel del patrimonio y de la situación financiera de la Entidad a día {{dia_cierre_ejercicio}} de {{mes_cierre_ejercicio}} de {{ano_cierre_ejercicio}}, así como de sus resultados {{si tipo_cuentas!="abreviadas"}}y flujos de efectivo{{fin si}} correspondientes al ejercicio terminado en dicha fecha, de conformidad con {{si marco_normativo=="NIIF-UE"}}las Normas Internacionales de Información Financiera adoptadas por la Unión Europea (NIIF-UE), y demás disposiciones del marco normativo de información financiera aplicable en España{{else}}el marco normativo de información financiera que resulta de aplicación (que se identifica en la nota {{numero_nota_marco}} de la memoria){{fin si}} y, en particular, con los principios y criterios contables contenidos en el mismo.
+{{fin si}}
+
+{{si tipo_opinion=="desfavorable"}}
+En nuestra opinión, debido al efecto muy significativo de la(s) cuestión(es) descrita(s) en la sección Fundamento de la opinión desfavorable de nuestro informe, las {{si tipo_cuentas=="consolidadas"}}cuentas anuales consolidadas{{fin si}}{{si tipo_cuentas=="abreviadas"}}cuentas anuales abreviadas{{fin si}}{{si tipo_cuentas=="normales"}}cuentas anuales{{fin si}} adjuntas no expresan, en todos los aspectos significativos, la imagen fiel del patrimonio y de la situación financiera de la Entidad a día {{dia_cierre_ejercicio}} de {{mes_cierre_ejercicio}} de {{ano_cierre_ejercicio}}, así como de sus resultados {{si tipo_cuentas!="abreviadas"}}y flujos de efectivo{{fin si}} correspondientes al ejercicio terminado en dicha fecha, de conformidad con {{si marco_normativo=="NIIF-UE"}}las Normas Internacionales de Información Financiera adoptadas por la Unión Europea (NIIF-UE), y demás disposiciones del marco normativo de información financiera aplicable en España{{else}}el marco normativo de información financiera que resulta de aplicación (que se identifica en la nota {{numero_nota_marco}} de la memoria){{fin si}}.
+{{fin si}}
+
+{{si tipo_opinion=="denegada"}}
+No expresamos una opinión sobre las {{si tipo_cuentas=="consolidadas"}}cuentas anuales consolidadas{{fin si}}{{si tipo_cuentas=="abreviadas"}}cuentas anuales abreviadas{{fin si}}{{si tipo_cuentas=="normales"}}cuentas anuales{{fin si}} de la Entidad adjuntas. Debido al efecto muy significativo de las cuestiones descritas en la sección Fundamento de la denegación de opinión de nuestro informe, no hemos podido obtener evidencia de auditoría que proporcione una base suficiente y adecuada para expresar una opinión de auditoría sobre estas cuentas anuales.
+{{fin si}}
+
+Fundamento de la opinión{{si tipo_opinion=="desfavorable"}} desfavorable{{fin si}}{{si tipo_opinion=="denegada"}} denegada{{fin si}}{{si tipo_opinion=="salvedades"}} con salvedades{{fin si}}
+
+{{si tipo_opinion=="salvedades" and motivo_calificacion=="incorreccion"}}
+Tal como se explica en la nota {{numero_nota_incorreccion}} de la memoria adjunta, la Entidad no ha {{descripcion_incorreccion}}. Si se hubiese [explicación de cómo se habría corregido la incorrección], muchos elementos de las cuentas anuales adjuntas se habrían visto afectados de forma material. De acuerdo con los registros de la Entidad, [cuantificación de los efectos de la incorrección sobre partidas concretas: p.ej., reducir existencias en X, aumentar coste de ventas en X, etc.]. En consecuencia, [efecto sobre resultados e impuestos: p.ej., el resultado neto y el patrimonio neto deberían minorarse en X…].
+{{fin si}}
+
+{{si tipo_opinion=="salvedades" and motivo_calificacion=="limitacion"}}
+Tal como se indica en la nota {{numero_nota_limitacion}} de la memoria adjunta, {{descripcion_limitacion}}. En el transcurso de nuestro trabajo no hemos tenido acceso a [información o personas necesarias, p. ej., la información financiera, planes de negocio, la dirección ni a los auditores de XYZ]. En consecuencia, no hemos podido obtener evidencia de auditoría suficiente y adecuada sobre [la partida afectada, p. ej., el importe recuperable de la inversión en XYZ a 31 de diciembre de {{ano_cierre_ejercicio}}], ni determinar si [efectos potenciales: p. ej., el importe por el que figura registrada la inversión debe ser ajustado].
+{{fin si}}
+
+{{si tipo_opinion=="desfavorable"}}
+Tal como se explica en la nota {{numero_nota_desfavorable}} de la memoria adjunta, la Entidad {{descripcion_desfavorable}}. Si se hubiese [acción correcta que no se tomó], muchos elementos de las cuentas anuales adjuntas se habrían visto afectados de forma muy significativa. No se han determinado los efectos sobre las cuentas anuales de esta omisión.
+{{fin si}}
+
+{{si tipo_opinion=="denegada"}}
+Ejemplo ilustrativo 1: Fuimos nombrados auditores de la Entidad con posterioridad al {{dia_cierre_ejercicio}} de {{mes_cierre_ejercicio}} de {{ano_cierre_ejercicio_anterior}} y, por lo tanto, no presenciamos el recuento físico de las existencias al inicio y al cierre del ejercicio. No hemos podido satisfacernos, mediante procedimientos alternativos, de las cantidades de existencias a 31 de diciembre de {{ano_cierre_ejercicio_anterior}} y {{ano_cierre_ejercicio}}, las cuales están registradas en los balances por xx y xx miles de euros, respectivamente. Asimismo, la introducción en septiembre de {{ano_cierre_ejercicio}} de un nuevo sistema informatizado de cuentas a cobrar ocasionó numerosos errores en dichas cuentas. A la fecha de nuestro informe de auditoría, los administradores aún estaban en el proceso de rectificar las deficiencias del sistema y de corregir los errores. No pudimos confirmar o verificar por medios alternativos las cuentas a cobrar incluidas en el balance por un importe total de xxx miles de euros a 31 de diciembre de {{ano_cierre_ejercicio}}. Como resultado de estos hechos, no hemos podido determinar los ajustes que podrían haber sido necesarios en relación con las existencias y las cuentas a cobrar registradas, o no registradas, ni en relación con los elementos integrantes de la cuenta de pérdidas y ganancias, del estado de cambios en el patrimonio neto y del estado de flujos de efectivo.
+
+Ejemplo ilustrativo 2: Tal como se indica en la nota {{numero_nota_denegada}} de la memoria adjunta, el día {{dia_evento_incertidumbre}} de {{mes_evento_incertidumbre}} de {{ano_evento_incertidumbre}} la sociedad dependiente XYZ entró en un procedimiento de insolvencia que supuso, de facto, la pérdida de control de la Entidad sobre dicha sociedad. La cuenta de pérdidas y ganancias del ejercicio {{ano_cierre_ejercicio}} recoge deterioros de valor por un importe total de xxx miles de euros de pérdida. Asimismo, el balance a 31 de diciembre de {{ano_cierre_ejercicio}} incluye saldos con dicha sociedad en los epígrafes "Deudas a corto plazo" y "Acreedores comerciales y otras cuentas a pagar" por importes de xx y xx miles de euros, respectivamente, así como en "Inversiones financieras a largo plazo" y "Deudores comerciales y otras cuentas por cobrar" figuran inversiones y créditos cuyo coste asciende a xx y xx miles de euros, respectivamente, que han sido completamente deteriorados en el ejercicio. Dado que no nos ha sido posible llevar a cabo ningún procedimiento de auditoría sobre dichos saldos y transacciones, no hemos podido obtener evidencia de auditoría suficiente y adecuada sobre los mismos ni sobre posibles efectos no registrados relativos a las operaciones y saldos de la referida sociedad y su impacto, de haberlo, sobre las cuentas anuales del ejercicio {{ano_cierre_ejercicio}} adjuntas.
+{{fin si}}
+
+Hemos llevado a cabo nuestra auditoría de conformidad con la normativa reguladora de la actividad de auditoría de cuentas vigente en España. Nuestras responsabilidades de acuerdo con dichas normas se describen más adelante en la sección Responsabilidades del auditor en relación con la auditoría de las cuentas anuales de nuestro informe.
+
+Somos independientes de la Entidad de conformidad con los requerimientos de ética, incluidos los de independencia, que son aplicables a nuestra auditoría de las cuentas anuales en España según lo exigido por la normativa reguladora de la actividad de auditoría de cuentas. En este sentido, no hemos prestado servicios distintos a los de la auditoría de cuentas ni han concurrido situaciones o circunstancias que, de acuerdo con lo establecido en la citada normativa reguladora, hayan afectado a la necesaria independencia de modo que se haya visto comprometida.
+
+Consideramos que la evidencia de auditoría que hemos obtenido proporciona una base suficiente y adecuada para nuestra opinión{{si tipo_opinion=="desfavorable"}} desfavorable{{fin si}}{{si tipo_opinion=="salvedades"}} con salvedades{{fin si}}{{si tipo_opinion=="denegada"}} (denegada){{fin si}}.
+
+{{si incertidumbre_funcionamiento=="si" and tipo_opinion=="favorable"}}
+Incertidumbre material relacionada con la empresa en funcionamiento
+
+Llamamos la atención sobre la nota {{numero_nota_funcionamiento}} de las cuentas anuales adjuntas, que indica que la Entidad ha incurrido en pérdidas netas de {{monto_perdidas}} miles de euros durante el ejercicio terminado el día {{dia_cierre_ejercicio}} de {{mes_cierre_ejercicio}} de {{ano_cierre_ejercicio}} y que, a esa fecha, el pasivo corriente de la Entidad excedía a su activo corriente en {{monto_exceso_pasivo}} miles de euros. Como se menciona en la nota {{numero_nota_funcionamiento}}, estos hechos o condiciones, junto con otras cuestiones expuestas en dicha nota, indican la existencia de una incertidumbre material que puede generar dudas significativas sobre la capacidad de la Entidad para continuar como empresa en funcionamiento. Nuestra opinión no ha sido modificada en relación con esta cuestión.
+{{fin si}}
+
+{{si enfasis_adicional=="si"}}
+Párrafo de énfasis
+
+Llamamos la atención sobre la nota {{numero_nota_enfasis}} de las cuentas anuales adjuntas, que describe {{descripcion_enfasis}}. Nuestra opinión no ha sido modificada en relación con esta cuestión.
+{{fin si}}
+
+{{si tipo_entidad=="EIP" or (tipo_entidad!="EIP" and amra_voluntario=="si")}}
+{{si tipo_entidad=="EIP"}}Cuestiones clave de la auditoría{{fin si}}{{si tipo_entidad!="EIP"}}Aspectos más relevantes de la auditoría{{fin si}}
+
+Las {{si tipo_entidad=="EIP"}}cuestiones clave de la auditoría{{fin si}}{{si tipo_entidad!="EIP"}}aspectos más relevantes de la auditoría{{fin si}} son aquellas {{si tipo_entidad=="EIP"}}cuestiones{{fin si}}{{si tipo_entidad!="EIP"}}riesgos de incorrección material{{fin si}} que, según nuestro juicio profesional, han sido de la mayor significatividad en nuestra auditoría de las {{si tipo_cuentas=="consolidadas"}}cuentas anuales consolidadas{{fin si}}{{si tipo_cuentas=="abreviadas"}}cuentas anuales abreviadas{{fin si}}{{si tipo_cuentas=="normales"}}cuentas anuales{{fin si}} del periodo actual. Estas {{si tipo_entidad=="EIP"}}cuestiones{{fin si}}{{si tipo_entidad!="EIP"}}riesgos{{fin si}} han sido tratadas en el contexto de nuestra auditoría de las cuentas anuales en su conjunto, y en la formación de nuestra opinión sobre éstas, y no expresamos una opinión por separado sobre {{si tipo_entidad=="EIP"}}esas cuestiones{{fin si}}{{si tipo_entidad!="EIP"}}esos riesgos{{fin si}}.
+
+{{si tipo_opinion=="favorable"}}
+{{si incertidumbre_funcionamiento=="no" and (otros_kam=="no" or otros_amra=="no")}}
+Hemos determinado que no existen {{si tipo_entidad=="EIP"}}cuestiones clave{{fin si}}{{si tipo_entidad!="EIP"}}aspectos más relevantes{{fin si}} de la auditoría que se deban comunicar en nuestro informe.
+{{fin si}}
+
+{{si incertidumbre_funcionamiento=="si" and (otros_kam=="no" or otros_amra=="no")}}
+Excepto por la cuestión descrita en la sección Incertidumbre material relacionada con la empresa en funcionamiento, hemos determinado que no existen otras {{si tipo_entidad=="EIP"}}cuestiones clave{{fin si}}{{si tipo_entidad!="EIP"}}incorrecciones material más significativas{{fin si}} consideradas en la auditoría que se deban comunicar en nuestro informe.
+{{fin si}}
+
+{{si (incertidumbre_funcionamiento=="si" and otros_kam=="si") or (incertidumbre_funcionamiento=="no" and otros_kam=="si")}}
+Además de {{si incertidumbre_funcionamiento=="si"}}la cuestión descrita en la sección Incertidumbre material relacionada con la empresa en funcionamiento{{else}}las cuestiones descritas anteriormente{{fin si}}, hemos determinado que las {{si tipo_entidad=="EIP"}}cuestiones{{fin si}}{{si tipo_entidad!="EIP"}}riesgos{{fin si}} que se describen a continuación son las {{si tipo_entidad=="EIP"}}cuestiones clave{{fin si}}{{si tipo_entidad!="EIP"}}riesgos más significativos{{fin si}} considerados en la auditoría que se deben comunicar en nuestro informe.
+{{fin si}}
+{{fin si}}
+
+{{si tipo_opinion!="favorable"}}
+{{si otros_kam=="no" and tipo_entidad=="EIP"}}
+Excepto por las cuestión(es) descrita(s) en la sección Fundamento de la {{si tipo_opinion=="desfavorable"}}opinión desfavorable{{fin si}}{{si tipo_opinion=="denegada"}}denegación de opinión{{fin si}}{{si tipo_opinion=="salvedades"}}opinión con salvedades{{fin si}}, hemos determinado que no existen otras cuestiones clave de la auditoría que se deban comunicar en nuestro informe.
+{{fin si}}
+
+{{si otros_amra=="no" and tipo_entidad!="EIP"}}
+Excepto por las cuestión(es) descrita(s) en la sección Fundamento de la {{si tipo_opinion=="desfavorable"}}opinión desfavorable{{fin si}}{{si tipo_opinion=="denegada"}}denegación de opinión{{fin si}}{{si tipo_opinion=="salvedades"}}opinión con salvedades{{fin si}}, hemos determinado que no existen otros riesgos más significativos considerados en la auditoría que se deban comunicar en nuestro informe.
+{{fin si}}
+
+{{si otros_kam=="si" and tipo_entidad=="EIP"}}
+Además de la(s) cuestión(es) descrita(s) en la sección Fundamento de la {{si tipo_opinion=="desfavorable"}}opinión desfavorable{{fin si}}{{si tipo_opinion=="denegada"}}denegación de opinión{{fin si}}{{si tipo_opinion=="salvedades"}}opinión con salvedades{{fin si}}, hemos determinado que las siguientes son las cuestiones clave de la auditoría que se deben comunicar en nuestro informe.
+{{fin si}}
+
+{{si otros_amra=="si" and tipo_entidad!="EIP"}}
+Además de la(s) cuestión(es) descrita(s) en la sección Fundamento de la {{si tipo_opinion=="desfavorable"}}opinión desfavorable{{fin si}}{{si tipo_opinion=="denegada"}}denegación de opinión{{fin si}}{{si tipo_opinion=="salvedades"}}opinión con salvedades{{fin si}}, hemos determinado que los siguientes son los riesgos más significativos considerados en la auditoría que se deben comunicar en nuestro informe.
+{{fin si}}
+{{fin si}}
+
+Título de la {{si tipo_entidad=="EIP"}}Cuestión Clave de la Auditoría{{fin si}}{{si tipo_entidad!="EIP"}}Aspecto más relevante de la auditoría{{fin si}}
+
+Tal como se indica en la nota {{numero_nota_kam}} de la memoria{{si tipo_cuentas=="consolidadas"}} consolidada{{fin si}} adjunta, {{descripcion_kam_amra}}. Por todo lo indicado anteriormente, ____ se ha considerado {{si tipo_entidad=="EIP"}}clave{{fin si}}{{si tipo_entidad!="EIP"}}relevante{{fin si}} en nuestra auditoría / Por ello, consideramos esta {{si tipo_entidad=="EIP"}}cuestión{{fin si}}{{si tipo_entidad!="EIP"}}cuestión/aspecto{{fin si}} como {{si tipo_entidad=="EIP"}}clave{{fin si}}{{si tipo_entidad!="EIP"}}relevante{{fin si}} en nuestra auditoría.
+
+Nuestros procedimientos de auditoría han incluido, entre otros, {{procedimientos_auditoria_kam}}.
+
+{{si entidad_cotizada=="si"}}
+(Si existen varias cuestiones clave de la auditoría, repetir la estructura anterior para cada CCA.)
+{{fin si}}{{si entidad_cotizada!="si"}}
+(Si existen varios aspectos más relevantes, repetir la estructura anterior para cada AMRA.)
+{{fin si}}
+
+{{si tipo_entidad=="EIP" or obligacion_presentar_informe_gestion=="si"}}
+
+{{si otras_cuestiones=="si"}}
+Otras cuestiones
+
+{{si texto_cuestiones=="informe otro auditor"}}
+Las cuentas anuales {{si tipo_cuentas=="abreviadas"}}abreviadas{{fin si}} de {{nombre_entidad}}, correspondientes al ejercicio terminado a {{dia_cierre_ejercicio}} de {{mes_cierre_ejercicio}} de {{ano_cierre_ejercicio}}, fueron auditadas por otro auditor que expresó una opinión favorable sobre dichas cuentas anuales el {{dia_informe_auditoria_ejercicioanterior}} de {{mes_informe_auditoria_ejercicioanterior}} de {{ano_informe_auditoria_ejercicioanterior}}.
+{{fin si}}
+
+{{si texto_cuestiones=="cuentas anuales no auditadas"}}
+Las cuentas anuales {{si tipo_cuentas=="abreviadas"}}abreviadas{{fin si}} correspondientes al ejercicio {{ano_cierre_ejercicioanterior}} no fueron auditadas por no estar las mismas sujetos a auditoría obligatoria.
+{{fin si}}
+
+{{si texto_cuestiones=="otros"}}
+A completar
+{{fin si}}
+{{fin si}}
+
+Otra información: Informe de gestión{{si tipo_cuentas=="consolidadas"}}{{si tipo_entidad=="EIP"}} consolidado{{fin si}}{{fin si}}
+
+La otra información comprende exclusivamente el informe de gestión{{si tipo_cuentas=="consolidadas"}}{{si tipo_entidad=="EIP"}} consolidado{{fin si}}{{fin si}} del ejercicio {{ano_cierre_ejercicio}}, cuya formulación es responsabilidad de los administradores {{si tipo_cuentas=="consolidadas" and tipo_entidad=="EIP"}}de la Sociedad dominante{{else}}de la Entidad{{fin si}} y no forma parte integrante de las cuentas anuales{{si tipo_cuentas=="consolidadas"}} consolidadas{{fin si}}{{si tipo_cuentas=="abreviadas"}} abreviadas{{fin si}}.
+
+{{si tipo_opinion=="denegada"}}
+Nuestra responsabilidad sobre el informe de gestión viene exigida por la normativa reguladora de la actividad de auditoría de cuentas. Sin embargo, debido al efecto muy significativo de las cuestiones descritas en la sección Fundamento de la denegación de opinión, no nos es posible concluir sobre el informe de gestión en los términos previstos en la citada normativa.
+{{si obligacion_EINF=="si"}}(Si la Entidad está obligada a EINF, adaptar la redacción de esta sección de acuerdo con los modelos aplicables.){{fin si}}
+{{fin si}}
+
+{{si tipo_opinion!="denegada"}}
+Nuestra opinión de auditoría sobre las cuentas anuales no cubre el informe de gestión. Nuestra responsabilidad sobre el informe de gestión, de conformidad con lo exigido por la normativa reguladora de la actividad de auditoría de cuentas, consiste en:
+
+a) Comprobar únicamente que el estado de información no financiera {{si tipo_cuentas=="consolidadas"}}(EINF) consolidado{{fin si}}{{si entidad_cotizada=="si"}}, determinada información incluida en el Informe Anual de Gobierno Corporativo y el Informe Anual de Remuneraciones de los Consejeros, a los que se refiere la Ley de Auditoría de Cuentas,{{fin si}} se ha facilitado en la forma prevista en la normativa aplicable y, en caso contrario, a informar sobre ello.
+
+b) Evaluar e informar sobre la concordancia del resto de la información incluida en el informe de gestión {{si tipo_cuentas=="consolidadas"}}consolidado{{fin si}} con las cuentas anuales{{si tipo_cuentas=="consolidadas"}} consolidadas{{fin si}}, a partir del conocimiento {{si tipo_cuentas=="consolidadas"}}del Grupo{{else}}de la Entidad{{fin si}} obtenido en la realización de la auditoría de las citadas cuentas, así como evaluar e informar de si el contenido y presentación {{si tipo_cuentas=="consolidadas"}}de esta parte{{fin si}} del informe de gestión {{si tipo_cuentas=="consolidadas"}}consolidado{{fin si}} son conformes a la normativa que resulta de aplicación. Si, basándonos en el trabajo que hemos realizado, concluimos que existen incorrecciones materiales, estamos obligados a informar de ello.
+
+{{si obligacion_EINF=="no"}}
+Sobre la base del trabajo realizado, según lo descrito en el párrafo anterior, {{si tipo_opinion=="favorable"}}no tenemos nada que informar{{fin si}}{{si tipo_opinion!="favorable"}}salvo por las {{si limitacion_alcance=="si"}}limitación(es) al alcance{{else}}incorrección(es) material(es){{fin si}} indicadas,{{fin si}} la información que contiene el informe de gestión concuerda con la de las cuentas anuales del ejercicio {{ano_cierre_ejercicio}} y su contenido y presentación son conformes a la normativa que resulta de aplicación.
+
+{{si tipo_opinion!="favorable" and limitacion_alcance!="si"}}
+Como se describe en la sección Fundamento de la opinión {{si tipo_opinion=="desfavorable"}}desfavorable{{fin si}}{{si tipo_opinion=="salvedades"}}con salvedades{{fin si}}, existen incorrección(es) material(es) en las cuentas anuales adjuntas. Hemos concluido que dichas circunstancias afectan de igual manera y en la misma medida al informe de gestión.
+{{fin si}}
+
+{{si tipo_opinion!="favorable" and limitacion_alcance=="si"}}
+Como se describe en la sección Fundamento de la opinión con salvedades, no hemos podido obtener evidencia de auditoría suficiente y adecuada sobre la(s) cuestión(es) indicada(s) en dicha sección, lo que supone una/varias limitación(es) al alcance de nuestro trabajo. En consecuencia, no hemos podido alcanzar una conclusión sobre si la información que contiene el informe de gestión concuerda con la de las cuentas anuales ni sobre si su contenido y presentación son conformes a la normativa aplicable.
+{{fin si}}
+{{fin si}}
+
+{{si obligacion_EINF=="si"}}
+{{si entidad_cotizada!="si"}}
+Sobre la base del trabajo realizado, según lo descrito anteriormente, hemos comprobado que la información mencionada en el apartado a) anterior {{si einf_facilitado=="no"}}no se facilita{{else}}se facilita{{fin si}} en la forma prevista en la normativa aplicable {{si tipo_opinion!="favorable"}}y que, {{si tipo_opinion=="salvedades" and limitacion_alcance!="si"}}salvo por las incorrección(es) material(es) indicadas{{fin si}}{{si tipo_opinion=="salvedades" and limitacion_alcance=="si"}}salvo por la(s) limitación(es) al alcance descrita(s){{fin si}}{{si tipo_opinion=="desfavorable"}}debido a las incorrección(es) materiales que motivaron la opinión desfavorable{{fin si}}, el resto de la información que contiene el informe de gestión concuerda con la de las cuentas anuales del ejercicio {{ano_cierre_ejercicio}} y su contenido y presentación son conformes a la normativa que resulta de aplicación.
+
+{{si tipo_opinion!="favorable"}}
+Como se describe en la sección Fundamento de la opinión {{si tipo_opinion=="desfavorable"}}desfavorable{{fin si}}{{si tipo_opinion=="salvedades"}}con salvedades{{fin si}}, existen {{si motivo_calificacion=="incorreccion"}}una/varias incorrección(es) material(es){{fin si}}{{si motivo_calificacion=="limitacion"}}una/varias limitación(es) al alcance{{fin si}} en las cuentas anuales adjuntas. Hemos concluido que dichas circunstancias afectan de igual manera y en la misma medida al informe de gestión.
+{{fin si}}
+{{fin si}}
+
+{{si entidad_cotizada=="si"}}
+Sobre la base del trabajo realizado, según lo descrito anteriormente, hemos comprobado que la información mencionada en el apartado a) anterior {{si einf_facilitado=="no"}}no se facilita{{else}}se facilita{{fin si}} en la forma prevista en la normativa aplicable {{si tipo_opinion!="favorable"}}y que, {{si tipo_opinion=="salvedades" and limitacion_alcance!="si"}}salvo por las incorrección(es) material(es) indicadas{{fin si}}{{si tipo_opinion=="salvedades" and limitacion_alcance=="si"}}salvo por la(s) limitación(es) al alcance descrita(s){{fin si}}{{si tipo_opinion=="desfavorable"}}debido a las incorrección(es) materiales que motivaron la opinión desfavorable{{fin si}}, el resto de la información que contiene el informe de gestión consolidado concuerda con la de las cuentas anuales consolidadas del ejercicio {{ano_cierre_ejercicio}} y su contenido y presentación son conformes a la normativa que resulta de aplicación.
+
+{{si tipo_opinion!="favorable"}}
+Como se describe en la sección Fundamento de la opinión {{si tipo_opinion=="desfavorable"}}desfavorable{{fin si}}{{si tipo_opinion=="salvedades"}}con salvedades{{fin si}}, existen {{si motivo_calificacion=="incorreccion"}}una/varias incorrección(es) material(es){{fin si}}{{si motivo_calificacion=="limitacion"}}una/varias limitación(es) al alcance{{fin si}} en las cuentas anuales consolidadas adjuntas. Hemos concluido que dichas circunstancias afectan de igual manera y en la misma medida al informe de gestión consolidado.
+{{fin si}}
+{{fin si}}
+{{fin si}}
+{{fin si}}
+
+{{si tipo_cuentas=="abreviadas" and incluir_PAR_section=="si"}}
+Otra información: Propuesta de aplicación del resultado
+
+La otra información comprende exclusivamente la Propuesta de aplicación del resultado del ejercicio {{ano_cierre_ejercicio}}, cuya formulación es responsabilidad de los administradores de la Entidad y no forma parte integrante de las cuentas anuales abreviadas.
+
+Nuestra opinión de auditoría sobre las cuentas anuales abreviadas no cubre la Propuesta de aplicación del resultado. Nuestra responsabilidad sobre la misma, de conformidad con lo exigido por la normativa reguladora de la actividad de auditoría de cuentas, consiste en evaluar e informar sobre su concordancia con las cuentas anuales, a partir del conocimiento de la entidad obtenido en la realización de la auditoría de las citadas cuentas. Si, basándonos en el trabajo que hemos realizado, concluimos que existen incorrecciones materiales, estamos obligados a informar de ello.
+
+Sobre la base del trabajo realizado, según lo descrito en el párrafo anterior, no tenemos nada que informar respecto a la Propuesta de aplicación del resultado.
+{{fin si}}
+
+Responsabilidad de los administradores{{si tipo_entidad=="EIP" and entidad_cotizada=="si"}} y de la comisión de auditoría de la Sociedad dominante{{fin si}}{{si tipo_entidad=="EIP" and entidad_cotizada!="si"}} y de la comisión de auditoría{{fin si}} en relación con las cuentas anuales{{si tipo_cuentas=="consolidadas"}} consolidadas{{fin si}}{{si tipo_cuentas=="abreviadas"}} abreviadas{{fin si}}
+
+Los administradores {{si tipo_cuentas=="consolidadas"}}de la Sociedad dominante{{fin si}} son responsables de formular las cuentas anuales{{si tipo_cuentas=="consolidadas"}} consolidadas{{fin si}}{{si tipo_cuentas=="abreviadas"}} abreviadas{{fin si}} adjuntas, de forma que expresen la imagen fiel del patrimonio, de la situación financiera {{si tipo_cuentas=="consolidadas"}}consolidada{{fin si}} y de los resultados {{si tipo_cuentas=="consolidadas"}}consolidados del Grupo{{else}}de la Entidad{{fin si}}, de conformidad con el marco normativo de información financiera aplicable {{si tipo_cuentas=="consolidadas"}}al Grupo{{else}}a la Entidad{{fin si}} en España, y del control interno que consideren necesario para permitir la preparación de cuentas anuales{{si tipo_cuentas=="consolidadas"}} consolidadas{{fin si}} libres de incorrección material, debida a fraude o error.
+
+En la preparación de las cuentas anuales{{si tipo_cuentas=="consolidadas"}} consolidadas{{fin si}}, los administradores {{si tipo_cuentas=="consolidadas"}}de la Sociedad dominante{{fin si}} son responsables de la valoración de la capacidad {{si tipo_cuentas=="consolidadas"}}del Grupo{{else}}de la Entidad{{fin si}} para continuar como empresa en funcionamiento, revelando, según corresponda, las cuestiones relacionadas con empresa en funcionamiento y utilizando el principio contable de empresa en funcionamiento excepto si los {{si tipo_cuentas=="consolidadas"}}citados{{fin si}} administradores tienen intención de liquidar {{si tipo_cuentas=="consolidadas"}}el Grupo{{else}}la Entidad{{fin si}} o de cesar sus operaciones, o bien no exista otra alternativa realista.
+
+{{si tipo_entidad=="EIP"}}
+La comisión de auditoría {{si tipo_cuentas=="consolidadas"}}de la Sociedad dominante{{fin si}} es responsable de la supervisión del proceso de elaboración y presentación de las cuentas anuales{{si tipo_cuentas=="consolidadas"}} consolidadas{{fin si}}.
+{{fin si}}
+
+Responsabilidades del auditor en relación con la auditoría de las cuentas anuales
+
+Nuestros objetivos son obtener una seguridad razonable de que las cuentas anuales en su conjunto están libres de incorrección material, debida a fraude o error, y emitir un informe de auditoría que contiene nuestra opinión.
+
+Seguridad razonable es un alto grado de seguridad pero no garantiza que una auditoría realizada de conformidad con la normativa reguladora de la actividad de auditoría de cuentas vigente en España siempre detecte una incorrección material cuando existe. Las incorrecciones pueden deberse a fraude o error y se consideran materiales si, individualmente o de forma agregada, puede preverse razonablemente que influyan en las decisiones económicas que los usuarios toman basándose en las cuentas anuales.
+
+Como parte de una auditoría de conformidad con la normativa reguladora de la actividad de auditoría de cuentas vigente en España, aplicamos nuestro juicio profesional y mantenemos una actitud de escepticismo profesional durante toda la auditoría. También:
+
+• Identificamos y valoramos los riesgos de incorrección material en las cuentas anuales, debida a fraude o error, diseñamos y aplicamos procedimientos de auditoría para responder a dichos riesgos y obtenemos evidencia de auditoría suficiente y adecuada para proporcionar una base para nuestra opinión. El riesgo de no detectar una incorrección material debida a fraude es más elevado que en el caso de una incorrección material debida a error, ya que el fraude puede implicar colusión, falsificación, omisiones deliberadas, manifestaciones intencionadamente erróneas o la elusión del control interno.
+
+• Obtenemos conocimiento del control interno relevante para la auditoría con el fin de diseñar procedimientos de auditoría que sean adecuados en función de las circunstancias, y no con la finalidad de expresar una opinión sobre la eficacia del control interno de la Entidad.
+
+• Evaluamos si las políticas contables aplicadas son adecuadas y la razonabilidad de las estimaciones contables y la correspondiente información revelada por los administradores.
+
+• Concluimos sobre si es adecuada la utilización, por los administradores, del principio contable de empresa en funcionamiento y, basándonos en la evidencia de auditoría obtenida, concluimos sobre si existe o no una incertidumbre material relacionada con hechos o con condiciones que pueden generar dudas significativas sobre la capacidad de la Entidad para continuar como empresa en funcionamiento. Si concluimos que existe una incertidumbre material, se requiere que llamemos la atención en nuestro informe de auditoría sobre la correspondiente información revelada en las cuentas anuales o, si dichas revelaciones no son adecuadas, que expresemos una opinión modificada. Nuestras conclusiones se basan en la evidencia de auditoría obtenida hasta la fecha de nuestro informe de auditoría. Sin embargo, hechos o condiciones futuros pueden ser la causa de que la Entidad deje de ser una empresa en funcionamiento.
+
+• Evaluamos la presentación global, la estructura y el contenido de las cuentas anuales, incluida la información revelada, y si las cuentas anuales representan las transacciones y hechos subyacentes de un modo que logran expresar la imagen fiel.
+
+• Nos comunicamos con los administradores de la Entidad en relación con, entre otras cuestiones, el alcance y el momento de realización de la auditoría planificados y los hallazgos significativos de la auditoría, así como cualquier deficiencia significativa del control interno que identificamos durante la auditoría.
+
+• Entre los riesgos significativos que han sido objeto de comunicación a los administradores de la Entidad, determinamos aquellos que han sido de la mayor significatividad en la auditoría de las cuentas anuales del periodo actual y que son, en consecuencia, los riesgos considerados más significativos. Describimos esos riesgos en nuestro informe de auditoría salvo que las disposiciones legales o reglamentarias prohíban revelar públicamente la cuestión.
+
+{{si tipo_entidad=="EIP"}}
+Informe sobre otros requerimientos legales y reglamentarios
+
+{{si entidad_cotizada=="si"}}
+Formato electrónico único europeo
+
+Hemos examinado el archivo digital del formato electrónico único europeo (FEUE) de {{nombre_entidad}} correspondiente al ejercicio {{ano_cierre_ejercicio}}, que comprende un archivo XHTML con las cuentas anuales del ejercicio, el cual formará parte del informe financiero anual.
+
+Los administradores de {{nombre_entidad}} son responsables de presentar el informe financiero anual del ejercicio {{ano_cierre_ejercicio}} de conformidad con los requerimientos de formato establecidos en el Reglamento Delegado (UE) 2019/815, de 17 de diciembre de 2018, de la Comisión Europea (en adelante, Reglamento FEUE). A este respecto, el Informe Anual de Gobierno Corporativo y el Informe Anual de Remuneraciones de los Consejeros han sido incorporados por referencia en el informe de gestión.
+
+Nuestra responsabilidad consiste en examinar el archivo digital preparado por los administradores de la entidad, de conformidad con la normativa reguladora de la actividad de auditoría de cuentas en vigor en España. Dicha normativa exige que planifiquemos y ejecutemos nuestros procedimientos de auditoría con el fin de comprobar si el contenido de las cuentas anuales incluidas en dicho fichero se corresponde íntegramente con el de las cuentas anuales que hemos auditado, y si el formato de las mismas se ha realizado, en todos los aspectos significativos, de conformidad con los requerimientos establecidos en el Reglamento FEUE.
+
+En nuestra opinión, el archivo digital examinado se corresponde íntegramente con las cuentas anuales auditadas, y éstas se presentan, en todos sus aspectos significativos, de conformidad con los requerimientos establecidos en el Reglamento FEUE.
+{{fin si}}
+
+Informe adicional para la comisión de auditoría
+
+La opinión expresada en este informe es coherente con lo manifestado en nuestro informe adicional para la comisión de auditoría de la Entidad de fecha {{dia_informe_adicional}} de {{mes_informe_adicional}} de {{ano_informe_adicional}}.
+
+Periodo de contratación
+
+La Junta General {{tipo_junta_nombramiento}} celebrada el día {{dia_nombramiento}} de {{mes_nombramiento}} de {{ano_nombramiento}} nos nombró como auditores por un período de {{periodo_auditoria}} años, contados a partir del ejercicio finalizado el día {{dia_inicio_periodo}} de {{mes_inicio_periodo}} de {{ano_inicio_periodo}}.
+
+Con anterioridad, {{si auditor_continuidad=="si"}}fuimos designados{{else}}no fuimos designados{{fin si}} por acuerdo(s) de la Junta General de Accionistas para el periodo de {{periodo_anterior}} años y hemos venido realizando el trabajo de auditoría de cuentas de forma ininterrumpida desde el ejercicio finalizado el día {{dia_inicio_auditoria_anterior}} de {{mes_inicio_auditoria_anterior}} de {{ano_inicio_auditoria_anterior}}.
+
+Servicios prestados
+
+Los servicios distintos a los de auditoría de cuentas, adicionales a los indicados en la memoria de las cuentas anuales (y/o en el informe de gestión), que han sido prestados a la Entidad auditada han sido los siguientes:
+
+{{descripcion_servicios_adicionales}}
+
+(Si no se han prestado servicios adicionales distintos a la auditoría, eliminar esta sección o indicar que no se han prestado otros servicios.)
+{{fin si}}
+{{fin si}}
+
+Este informe se corresponde con el sello distintivo Nº xx/xx/xxxxx emitido por el Instituto de Censores Jurados de Cuentas de España.
+
+{{ciudad_auditoria}}, {{dia_informe_auditoria}} de {{mes_informe_auditoria}} de {{ano_informe_auditoria}}
+
+{{firma_auditor}}
+ROAC Nº {{numero_roac_auditor}}
+
+(Firma del auditor)
+
+{{nombre_auditor}}
+ROAC Nº {{numero_roac_individual}}

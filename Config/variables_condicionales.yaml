@@ -1,0 +1,101 @@
+# Definición de variables de tipo "condición".
+# Cada condición genera una pregunta Sí/No en la UI.
+# Si la respuesta es "Sí" se inserta el contenido del .docx asociado
+# en el marcador correspondiente de la plantilla.
+
+conditions:
+  - id: comentario_inicial_formal
+    label: "Comentario inicial formal"
+    marker: "<<Comentario inicial formal>>"
+    type: "boolean_include_doc"
+    question: "¿Incluir comentario inicial formal?"
+    yes_no_values: ["Sí", "No"]
+    word_file: "condiciones/comentario_inicial_formal.docx"
+
+  - id: desarrollo_comentario_formal
+    label: "Desarrollo comentario formal"
+    marker: "<<Desarrollo comentario formal>>"
+    type: "boolean_include_doc"
+    question: "¿Incluir desarrollo del comentario formal?"
+    yes_no_values: ["Sí", "No"]
+    word_file: "condiciones/nocumple1.docx"
+
+  - id: desarrollo_doc_contemporanea
+    label: "Desarrollo doc. contemporánea"
+    marker: "<<Desarrollo doc contemporánea>>"
+    type: "boolean_include_doc"
+    question: "¿Incluir desarrollo sobre documentación contemporánea?"
+    yes_no_values: ["Sí", "No"]
+    word_file: "condiciones/blanco.docx"
+
+  - id: documentacion_otro_idioma
+    label: "Documentación en otro idioma"
+    marker: "<<Documentación otro idioma>>"
+    type: "boolean_include_doc"
+    question: "¿Incluir bloque sobre documentación en otro idioma?"
+    yes_no_values: ["Sí", "No"]
+    word_file: "condiciones/IdiomadistintoaInglesoespañol.docx"
+
+  - id: comentarios_servicios_intragrupo
+    label: "Comentarios sobre servicios intragrupo"
+    marker: "<<Comentarios de servicios intragrupo>>"
+    type: "boolean_include_doc"
+    question: "¿Incluir comentarios sobre servicios intragrupo?"
+    yes_no_values: ["Sí", "No"]
+    word_file: "condiciones/comentarios_servicios_intragrupo.docx"
+
+  - id: comentarios_falta_analisis
+    label: "Comentarios sobre falta de análisis"
+    marker: "<<Comentarios de falta de análisis>>"
+    type: "boolean_include_doc"
+    question: "¿Incluir comentarios sobre falta de análisis?"
+    yes_no_values: ["Sí", "No"]
+    word_file: "condiciones/NoseaportanAEC.docx"
+
+  - id: comentarios_analisis_desactualizados
+    label: "Comentarios sobre análisis desactualizados"
+    marker: "<<Comentarios de análisis desactualizados>>"
+    type: "boolean_include_doc"
+    question: "¿Incluir comentarios sobre análisis desactualizados?"
+    yes_no_values: ["Sí", "No"]
+    word_file: "condiciones/Infocomparables.docx"
+
+  - id: comentarios_independencia_superiores
+    label: "Comentarios sobre independencia de superiores"
+    marker: "<<Comentarios de independencia superiores>>"
+    type: "boolean_include_doc"
+    question: "¿Incluir comentarios sobre independencia de superiores?"
+    yes_no_values: ["Sí", "No"]
+    word_file: "condiciones/Filtroindepedencia.docx"
+
+  - id: comentarios_errores_filtros
+    label: "Comentarios sobre errores en filtros"
+    marker: "<<Comentarios errores filtros>>"
+    type: "boolean_include_doc"
+    question: "¿Incluir comentarios sobre errores en los filtros?"
+    yes_no_values: ["Sí", "No"]
+    word_file: "condiciones/blanco.docx"
+
+  - id: comentarios_metodos_valoracion
+    label: "Comentarios sobre métodos de valoración"
+    marker: "<<Comentarios métodos de valoración>>"
+    type: "boolean_include_doc"
+    question: "¿Incluir comentarios sobre métodos de valoración?"
+    yes_no_values: ["Sí", "No"]
+    word_file: "condiciones/Métododevaloración.docx"
+
+  - id: comentarios_perdidas
+    label: "Comentarios sobre pérdidas"
+    marker: "<<Comentarios de pérdidas>>"
+    type: "boolean_include_doc"
+    question: "¿Incluir comentarios sobre pérdidas?"
+    yes_no_values: ["Sí", "No"]
+    word_file: "condiciones/blanco.docx"
+
+  - id: desarrollo_discrepancias_formales
+    label: "Desarrollo discrepancias formales"
+    marker: "<<Desarrollo discrepancias formales>>"
+    type: "boolean_include_doc"
+    question: "¿Incluir desarrollo de discrepancias formales?"
+    yes_no_values: ["Sí", "No"]
+    word_file: "condiciones/DiscrepanciasimportesLF,CCyM232.docx"
