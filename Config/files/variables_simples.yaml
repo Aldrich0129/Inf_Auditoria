@@ -5,8 +5,8 @@ variables_simples:
   
   # ==================== VARIABLES TIPO LISTA (DROPDOWN) ====================
   
-  - id: destinatarios_informe
-    nombre: "Destinatarios del informe (administradores)"
+  - id: tipo_administradores
+    nombre: "El tipo de adiministradores de la entidad"
     tipo: lista
     opciones:
       - "los administradores"
@@ -16,8 +16,8 @@ variables_simples:
     requerido: true
     seccion: "Información general"
     
-  - id: destinatarios_accionistas
-    nombre: "Destinatarios (accionistas/socios)"
+  - id: Organo
+    nombre: "Tipo de organo administrativo que nombra al auditor"
     tipo: lista
     opciones:
       - "los Accionistas"
@@ -67,18 +67,18 @@ variables_simples:
     placeholder: "Ej: Madrid"
     seccion: "Información del auditor"
     
-  - id: firma_auditor
-    nombre: "Nombre de la firma auditora"
-    tipo: texto
-    requerido: true
-    placeholder: "Ej: Forvis Mazars España"
-    seccion: "Información del auditor"
-    
   - id: nombre_auditor
     nombre: "Nombre del auditor individual"
     tipo: texto
     requerido: true
     placeholder: "Nombre completo del auditor firmante"
+    seccion: "Información del auditor"
+
+  - id: numero_roac_auditor
+    nombre: "Número ROAC del auditor"
+    tipo: texto
+    requerido: true
+    placeholder: "Ej: S0702"
     seccion: "Información del auditor"
     
   # ==================== VARIABLES TIPO NÚMERO ====================
@@ -92,20 +92,6 @@ variables_simples:
     dependencia:
       variable: marco_normativo
       valor_no: "NIIF-UE"
-    
-  - id: numero_roac_auditor
-    nombre: "Número ROAC de la firma auditora"
-    tipo: texto
-    requerido: true
-    placeholder: "Ej: S0702"
-    seccion: "Información del auditor"
-    
-  - id: numero_roac_individual
-    nombre: "Número ROAC del auditor individual"
-    tipo: texto
-    requerido: true
-    placeholder: "Ej: 12345"
-    seccion: "Información del auditor"
     
   - id: periodo_auditoria
     nombre: "Período de contratación como auditor (en años)"
@@ -151,8 +137,12 @@ variables_simples:
       - id: ano_cierre_ejercicio
         tipo: numero
         placeholder: "2024"
-    seccion: "Fechas del ejercicio"
-    
+        
+  - id: ano_cierre_anterior
+    nombre: "Año del ejercicio anterior"
+    tipo: numero
+    formula: "ano_cierre_ejercicio - 1"
+   
   - id: fecha_informe_auditoria
     nombre: "Fecha de emisión del informe de auditoría"
     tipo: fecha
@@ -299,41 +289,25 @@ variables_simples:
     seccion: "Referencias a notas"
     ambito: local
     condicion_padre: "tipo_opinion=='denegada'"
-    
-  - id: ano_cierre_ejercicio_anterior
-    nombre: "Año de cierre del ejercicio anterior"
-    tipo: numero
-    requerido: false
-    placeholder: "2023"
-    seccion: "Fechas del ejercicio"
-    ambito: local
-    condicion_padre: "tipo_opinion=='denegada'"
-    
-  - id: dia_evento_incertidumbre
-    nombre: "Día del evento de incertidumbre"
-    tipo: numero
-    min: 1
-    max: 31
-    requerido: false
-    seccion: "Eventos específicos"
-    ambito: local
-    condicion_padre: "tipo_opinion=='denegada'"
-    
-  - id: mes_evento_incertidumbre
-    nombre: "Mes del evento de incertidumbre"
-    tipo: texto
-    requerido: false
-    seccion: "Eventos específicos"
-    ambito: local
-    condicion_padre: "tipo_opinion=='denegada'"
-    
-  - id: ano_evento_incertidumbre
-    nombre: "Año del evento de incertidumbre"
-    tipo: numero
-    requerido: false
-    seccion: "Eventos específicos"
-    ambito: local
-    condicion_padre: "tipo_opinion=='denegada'"
+      
+  - id: fecha_incertidumbre
+    nombre: "Fecha de evento de incertidumbre"
+    tipo: fecha
+    requerido: true
+    componentes:
+      - id: dia_evento_incertidumbre
+        tipo: numero
+        min: 1
+        max: 31
+      - id: mes_evento_incertidumbre
+        tipo: texto
+        placeholder: "diciembre"
+      - id: ano_evento_incertidumbre
+        tipo: numero
+        placeholder: "2024"
+    dependencia:
+      variable: tipo_opinion
+      valor: "denegada"
     
   - id: numero_nota_funcionamiento
     nombre: "Número de nota sobre empresa en funcionamiento"
@@ -370,15 +344,7 @@ variables_simples:
     seccion: "Referencias a notas"
     ambito: local
     condicion_padre: "enfasis_adicional=='si'"
-    
-  - id: ano_cierre_ejercicioanterior
-    nombre: "Año de cierre del ejercicio anterior"
-    tipo: numero
-    requerido: false
-    placeholder: "2023"
-    seccion: "Información ejercicio anterior"
-    ambito: local
-    condicion_padre: "otras_cuestiones=='si'"
+
     
   # ==================== VARIABLES TIPO TEXTO LIBRE (CONTENIDO DESCRIPTIVO) ====================
   
