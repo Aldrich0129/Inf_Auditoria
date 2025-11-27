@@ -15,15 +15,18 @@ variables_condicionales:
       - valor: "consolidadas"
         etiqueta: "Cuentas anuales consolidadas"
         descripcion: "Para grupos de empresas con sociedad dominante y dependientes"
+        titulo_informe: "Auditoría de Cuentas Anuales Consolidadas emitido por un Auditor Independiente"
         
       - valor: "abreviadas"
         etiqueta: "Cuentas anuales abreviadas"
         descripcion: "Para empresas que cumplen criterios de abreviación"
-        
+        titulo_informe: "Auditoría de Cuentas Anuales Abreviadas emitido por un Auditor Independiente"
+
       - valor: "normales"
         etiqueta: "Cuentas anuales normales"
         descripcion: "Cuentas anuales completas estándar"
         es_default: true
+        titulo_informe: "Auditoría de Cuentas Anuales emitido por un Auditor Independiente"
     
   # ==================== CONDICIÓN: TIPO DE AUDITORÍA ====================
   
@@ -60,7 +63,35 @@ variables_condicionales:
       - valor: "No EIP"
         etiqueta: "No es Entidad de Interés Público"
         es_default: true
-    
+
+  - id: informe_eip
+
+
+
+
+  - id: tipo_entidad
+    nombre: "Tipo de entidad"
+    descripcion: "Define si la entidad es de interés público (EIP) o no"
+    tipo_control: radio
+    requerido: true
+    seccion: "Características de la entidad"
+    opciones:
+      - valor: "EIP"
+        etiqueta: "Entidad de Interés Público (EIP)"
+        descripcion: "Cotizadas, entidades de crédito, aseguradoras, etc."
+        mostrar_informe_cuentas: true
+        texto_base_informe_cuentas: "Informe sobre las cuentas anuales"
+
+      - valor: "No EIP"
+        etiqueta: "No es Entidad de Interés Público"
+        es_default: true
+        mostrar_informe_cuentas: false
+
+
+
+
+
+
   # ==================== CONDICIÓN: TIPO DE OPINIÓN ====================
   
   - id: tipo_opinion
@@ -460,6 +491,31 @@ combinaciones_especiales:
       - tipo_opinion: ["salvedades", "desfavorable", "denegada"]
       - otros_kam: "no"
     descripcion: "Solo se reporta la cuestión de la opinión modificada"
+
+# Texto con condiciones complejas
+textos:
+
+  encargo_auditoria:
+    - condicion:
+        campo: "tipo_auditoria"
+        igual: "Voluntaria"
+      texto: "por encargo de {{entidad_encargante}}"
+
+  informe_eip:
+    - condicion:
+        and:
+          - campo: "tipo_entidad"
+            igual: "EIP"
+          - campo: "tipo_cuentas"
+            igual: "consolidadas"
+      texto: "Informe sobre las cuentas anuales consolidadas"
+
+    - condicion:
+        campo: "tipo_entidad"
+        igual: "EIP"
+      texto: "Informe sobre las cuentas anuales"
+
+
 
 # Configuración general
 configuracion:
