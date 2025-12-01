@@ -4,10 +4,17 @@ App - Aplicación principal Streamlit
 Interfaz web unificada que se adapta dinámicamente a los plugins disponibles.
 """
 
-import streamlit as st
+import sys
 from pathlib import Path
 from typing import Dict, Any, Optional
 from datetime import datetime
+
+import streamlit as st
+
+# Ensure the project root is in the Python path when running directly with Streamlit
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
 
 from report_platform.core.utils import setup_logger, get_outputs_dir, safe_filename
 from report_platform.core.config_loader import get_fields_by_section, get_general_config
