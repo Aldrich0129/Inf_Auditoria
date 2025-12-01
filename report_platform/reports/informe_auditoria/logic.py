@@ -40,8 +40,9 @@ logger = logging.getLogger(__name__)
 class BloquesTextoProcessor:
     """
     Procesador de bloques de texto condicionales.
-    
-    Lee la configuración YAML, evalúa condiciones y renderiza plantillas.
+
+    Lee la configuración YAML, evalúa condiciones y renderiza plantillas
+    según las reglas definidas en bloques_texto.yaml.
     """
     
     def __init__(self, config_dir: Optional[Path] = None):
@@ -58,7 +59,12 @@ class BloquesTextoProcessor:
         self._load_config()
     
     def _load_config(self) -> None:
-        """Carga la configuración de bloques de texto desde YAML."""
+        """
+        Carga la configuración de bloques de texto desde archivos YAML.
+
+        Busca y carga todos los archivos bloques_texto*.yaml en el
+        directorio de configuración del plugin.
+        """
         # Buscar archivos de bloques (pueden estar divididos en partes)
         yaml_files = list(self.config_dir.glob("bloques_texto*.yaml"))
         

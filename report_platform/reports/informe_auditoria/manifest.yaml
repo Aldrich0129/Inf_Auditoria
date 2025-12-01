@@ -16,7 +16,7 @@ autor: Jimmy - Forvis Mazars España
 
 # Rutas de recursos
 paths:
-  template: templates/plantilla_informe.txt
+  template: templates/plantilla_informe.docx
   config_dir: config
 
 # Capacidades del plugin
