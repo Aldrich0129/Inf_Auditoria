@@ -11,6 +11,9 @@ pydantic>=2.4.0
 # Procesamiento de documentos Word
 python-docx>=0.8.11
 
+# Renderizado de templates Word con Jinja2
+docxtpl>=0.16.0
+
 # Motor de templates
 Jinja2>=3.1.2
 

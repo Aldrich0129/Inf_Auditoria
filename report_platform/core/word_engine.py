@@ -42,65 +42,66 @@ def render_template_string(template_content: str, context: Dict[str, Any]) -> st
 # RENDERIZADO DE DOCUMENTOS WORD (PLACEHOLDER)
 # ==============================================================================
 
-def render_word_report(template_path: Path, context: Dict[str, Any], 
+def render_word_report(template_path: Path, context: Dict[str, Any],
                       output_filename: str) -> Optional[Path]:
     """
     Renderiza un informe Word desde una plantilla.
-    
-    NOTA: Esta es una implementación placeholder. Para renderizado completo
-    de Word con preservación de formato, se recomienda usar bibliotecas como:
-    - python-docx-template
-    - docxtpl
-    - mailmerge
-    
+
+    Utiliza docxtpl para renderizar plantillas Word con variables Jinja2,
+    preservando el formato del documento original.
+
     Args:
-        template_path: Path a la plantilla Word
+        template_path: Path a la plantilla Word (.docx)
         context: Diccionario con todas las variables
         output_filename: Nombre del archivo de salida
-    
+
     Returns:
         Path al archivo generado o None si hay error
     """
     logger.info(f"Renderizando informe desde: {template_path}")
-    
+
     try:
         # Verificar que la plantilla existe
         if not template_path.exists():
             logger.error(f"Plantilla no encontrada: {template_path}")
             return None
-        
+
         # Obtener directorio de salida
         output_dir = get_outputs_dir()
-        
+
         # Nombre seguro del archivo
         safe_name = safe_filename(output_filename)
         if not safe_name.endswith('.docx'):
             safe_name += '.docx'
-        
+
         output_path = output_dir / safe_name
-        
-        # TODO: Implementar renderizado real de Word
-        # Por ahora, generamos un archivo de texto con el contexto renderizado
-        
-        # Leer plantilla como texto
-        with open(template_path, 'r', encoding='utf-8', errors='ignore') as f:
-            template_content = f.read()
-        
-        # Renderizar con Jinja2
-        rendered_content = render_template_string(template_content, context)
-        
-        # Guardar como texto (placeholder)
-        with open(output_path.with_suffix('.txt'), 'w', encoding='utf-8') as f:
-            f.write(rendered_content)
-        
-        logger.info(f"Informe generado (placeholder): {output_path.with_suffix('.txt')}")
-        logger.warning("NOTA: Actualmente se genera un archivo .txt. " 
-                      "Para generación real de Word, implementar con python-docx-template")
-        
-        return output_path.with_suffix('.txt')
-    
+
+        # Renderizar con docxtpl
+        try:
+            from docxtpl import DocxTemplate
+
+            # Cargar plantilla
+            doc = DocxTemplate(str(template_path))
+
+            # Renderizar con contexto
+            # Filtrar valores None para evitar errores en el template
+            clean_context = {k: (v if v is not None else '') for k, v in context.items()}
+            doc.render(clean_context)
+
+            # Guardar documento
+            doc.save(str(output_path))
+
+            logger.info(f"✅ Informe Word generado exitosamente: {output_path}")
+            return output_path
+
+        except ImportError:
+            logger.error("docxtpl no está instalado. Instalarlo con: pip install docxtpl")
+            return None
+
     except Exception as e:
         logger.error(f"Error generando informe: {e}")
+        import traceback
+        logger.error(traceback.format_exc())
         return None
 
 
