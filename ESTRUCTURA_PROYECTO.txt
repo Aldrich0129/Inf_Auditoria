@@ -1,0 +1,291 @@
+# ==============================================================================
+# PLATAFORMA DE GENERACIÓN DE INFORMES - ESTRUCTURA DEL PROYECTO
+# ==============================================================================
+
+## Estructura de Carpetas y Archivos
+
+```
+project_root/
+│
+├── README.md                          # Documentación principal del proyecto
+├── requirements.txt                   # Dependencias Python
+│
+└── report_platform/                   # Paquete principal
+    │
+    ├── __init__.py                    # Exporta componentes principales
+    │
+    ├── core/                          # 🔷 NÚCLEO GENÉRICO (independiente del dominio)
+    │   ├── __init__.py
+    │   ├── config_loader.py           # Carga manifests y archivos YAML
+    │   ├── schema_models.py           # Modelos Pydantic (SimpleField, BlockDefinition, etc.)
+    │   ├── conditions_engine.py       # Motor de evaluación de condiciones
+    │   ├── word_engine.py             # Renderizado de documentos Word
+    │   ├── tables_engine.py           # Validación de estructuras de tabla
+    │   ├── ui_runtime.py              # Generación dinámica de controles UI
+    │   └── utils.py                   # Utilidades (logging, paths)
+    │
+    ├── reports/                       # 🔷 PLUGINS DE INFORMES
+    │   ├── __init__.py
+    │   │
+    │   └── informe_auditoria/         # Plugin: Informe de Auditoría
+    │       ├── __init__.py
+    │       ├── manifest.yaml          # Metadatos del plugin
+    │       │
+    │       ├── templates/             # Plantillas Word
+    │       │   └── plantilla_informe.txt
+    │       │
+    │       ├── config/                # Configuración YAML
+    │       │   ├── variables_simples.yaml
+    │       │   ├── variables_condicionales.yaml
+    │       │   └── bloques_texto.yaml
+    │       │
+    │       └── logic.py               # Lógica específica (build_context)
+    │
+    └── ui/                            # 🔷 INTERFAZ WEB UNIFICADA
+        ├── __init__.py
+        ├── router.py                  # Descubrimiento y carga de plugins
+        └── app.py                     # Aplicación Streamlit principal
+```
+
+## Descripción de los Módulos
+
+### 📦 Core (Núcleo)
+
+**Responsabilidad:** Proporcionar funcionalidad genérica reutilizable
+
+1. **config_loader.py**
+   - Carga y valida archivos YAML (manifests, campos, bloques)
+   - Parsea definiciones de plugins
+   - Funciones: load_manifest(), load_yaml_config(), load_plugin_config()
+
+2. **schema_models.py**
+   - Modelos Pydantic para validación de datos
+   - Clases: SimpleField, ConditionalVariable, BlockDefinition, TableDefinition, Manifest
+   - Asegura integridad de la configuración
+
+3. **conditions_engine.py**
+   - Evalúa expresiones condicionales de forma segura
+   - Funciones: evaluate_condition(), evaluate_block(), evaluate_all_blocks()
+   - Soporta operadores: ==, !=, and, or, not, in
+
+4. **word_engine.py**
+   - Motor de renderizado de documentos Word
+   - Actualmente: Implementación placeholder (genera .txt)
+   - Futuro: Integración con python-docx-template o docxtpl
+   - Función principal: render_word_report()
+
+5. **tables_engine.py**
+   - Validación de datos tabulares
+   - Funciones: validate_table_data(), filter_table_rows(), aggregate_table_column()
+   - Conversión entre formatos (dict_list ↔ table)
+
+6. **ui_runtime.py**
+   - Genera controles Streamlit dinámicamente desde YAML
+   - Funciones: render_field(), render_all_fields(), validate_form_data()
+   - Soporta: text, number, lista, text_area, campos calculados
+
+7. **utils.py**
+   - Utilidades auxiliares
+   - Logging configurado
+   - Manejo de paths y archivos
+
+### 📦 Reports (Plugins)
+
+**Responsabilidad:** Contener la lógica específica de cada tipo de informe
+
+Estructura de un plugin:
+```
+plugin_name/
+├── manifest.yaml          # ID, nombre, versión, paths
+├── templates/            # Plantilla(s) Word con {{ variables }}
+│   └── plantilla.docx
+├── config/               # YAMLs de configuración
+│   ├── variables_simples.yaml
+│   ├── variables_condicionales.yaml
+│   └── bloques_texto.yaml
+└── logic.py              # Función build_context(data_in) -> context
+```
+
+**Plugin incluido: informe_auditoria**
+- 70+ campos configurables
+- Variables condicionales para tipo de opinión, cuentas, entidad
+- Bloques de texto adaptativos según normativa
+- Soporta: EIP, KAM/AMRA, incertidumbres, énfasis
+
+### 📦 UI (Interfaz)
+
+**Responsabilidad:** Proporcionar interfaz web unificada y dinámica
+
+1. **router.py**
+   - Descubre plugins automáticamente en reports/
+   - Carga configuración completa de plugins
+   - Importa dinámicamente el módulo logic.py
+   - Funciones: list_available_reports(), load_report_plugin()
+
+2. **app.py**
+   - Aplicación Streamlit principal
+   - Renderiza formularios dinámicos basándose en YAML
+   - Flujo:
+     1. Seleccionar plugin
+     2. Cargar configuración
+     3. Renderizar variables condicionales
+     4. Renderizar campos simples (organizados por secciones)
+     5. Validar datos
+     6. Generar informe con build_context()
+     7. Ofrecer descarga
+
+## Flujo de Datos
+
+```
+Usuario
+  ↓
+[Streamlit UI] (app.py)
+  ↓
+Selecciona plugin → [Router] (router.py)
+  ↓
+Carga config → [Config Loader] (config_loader.py)
+  ↓
+Renderiza UI → [UI Runtime] (ui_runtime.py)
+  ↓
+Usuario completa formulario
+  ↓
+Validar datos → [Schema Models] (schema_models.py)
+  ↓
+build_context() → [Plugin Logic] (logic.py)
+  ├→ Evalúa condiciones → [Conditions Engine] (conditions_engine.py)
+  └→ Renderiza bloques → [Jinja2]
+  ↓
+Contexto completo
+  ↓
+Renderiza Word → [Word Engine] (word_engine.py)
+  ↓
+Documento generado → [Outputs]
+```
+
+## Características Clave
+
+### ✅ Arquitectura Modular
+- Core completamente genérico
+- Plugins autocontenidos
+- Fácil agregar nuevos tipos de informe
+
+### ✅ Configuración Declarativa
+- Todo definido en YAML
+- Sin código hardcodeado en core/UI
+- Cambios en YAML → Cambios inmediatos en UI
+
+### ✅ UI Dinámica
+- Formularios generados automáticamente
+- Campos condicionales (dependencias)
+- Validación automática
+- Agrupación por secciones
+
+### ✅ Motor de Condiciones
+- Evaluación segura de expresiones
+- Soporta lógica compleja (AND, OR, NOT)
+- Usado para:
+  - Mostrar/ocultar campos
+  - Seleccionar bloques de texto
+  - Calcular variables derivadas
+
+### ✅ Extensibilidad
+- Agregar plugin = crear carpeta + 4 archivos
+- No modificar core/UI
+- Detección automática de nuevos plugins
+
+## Cómo Agregar un Nuevo Plugin
+
+1. **Crear estructura de carpeta:**
+   ```
+   reports/mi_nuevo_informe/
+   ├── manifest.yaml
+   ├── templates/plantilla.docx
+   ├── config/
+   │   ├── variables_simples.yaml
+   │   └── bloques_texto.yaml
+   └── logic.py
+   ```
+
+2. **Definir manifest.yaml:**
+   ```yaml
+   id: mi_nuevo_informe
+   nombre: Mi Nuevo Informe
+   version: "1.0"
+   paths:
+     template: templates/plantilla.docx
+     config_dir: config
+   ```
+
+3. **Crear plantilla Word:**
+   - Usar variables {{ variable_name }}
+   - Sin lógica Jinja2 (if/for)
+
+4. **Definir campos en YAML:**
+   - variables_simples.yaml
+   - variables_condicionales.yaml (opcional)
+   - bloques_texto.yaml (opcional)
+
+5. **Implementar logic.py:**
+   ```python
+   def build_context(data_in: Dict[str, Any], 
+                     config_dir: Path = None) -> Dict[str, Any]:
+       # Tu lógica aquí
+       return context
+   ```
+
+6. **Ejecutar app:**
+   ```bash
+   streamlit run report_platform/ui/app.py
+   ```
+   
+   ¡El nuevo plugin aparecerá automáticamente en el selector!
+
+## Convenciones de Código
+
+- **Idioma:** Comentarios y docstrings en español
+- **Type hints:** Obligatorio en todas las funciones
+- **Logging:** Usar logger de utils.setup_logger()
+- **Imports:** Rutas absolutas (from report_platform.core...)
+- **Naming:**
+  - Archivos: snake_case
+  - Clases: PascalCase
+  - Funciones: snake_case
+  - Constantes: UPPER_SNAKE_CASE
+
+## Próximas Mejoras Sugeridas
+
+1. **Word Engine completo:**
+   - Integrar python-docx-template o docxtpl
+   - Preservar formato de plantillas
+
+2. **Soporte para tablas dinámicas:**
+   - UI para agregar/eliminar filas
+   - Validación de datos tabulares
+
+3. **Exportación múltiple:**
+   - PDF
+   - HTML
+   - Markdown
+
+4. **Validaciones avanzadas:**
+   - Reglas de validación personalizadas
+   - Validación cruzada entre campos
+
+5. **Tests:**
+   - Unit tests para core
+   - Integration tests para plugins
+
+6. **Cache:**
+   - Cache de configuraciones cargadas
+   - Mejora de performance
+
+## Contacto y Soporte
+
+**Autor:** Jimmy  
+**Organización:** Forvis Mazars España  
+**Versión:** 1.0.0  
+**Fecha:** Diciembre 2024
+
+---
+
+Para cualquier duda o sugerencia, consultar la documentación completa en README.md

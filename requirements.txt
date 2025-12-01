@@ -1,0 +1,24 @@
+# ============================================================================
+# REQUIREMENTS.TXT - Dependencias de la Plataforma de Generación de Informes
+# ============================================================================
+
+# Framework de UI
+streamlit>=1.28.0
+
+# Validación de datos
+pydantic>=2.4.0
+
+# Procesamiento de documentos Word
+python-docx>=0.8.11
+
+# Motor de templates
+Jinja2>=3.1.2
+
+# Parsing de archivos YAML
+PyYAML>=6.0.1
+
+# Utilidades
+python-dateutil>=2.8.2
+
+# Logging mejorado (opcional)
+colorlog>=6.7.0

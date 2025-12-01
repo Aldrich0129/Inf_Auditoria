@@ -1,0 +1,217 @@
+# ==============================================================================
+# PLATAFORMA DE GENERACIÓN DE INFORMES
+# ==============================================================================
+# 
+# Versión: 1.0.0
+# Autor: Jimmy - Forvis Mazars España
+# Fecha: Diciembre 2024
+#
+# ==============================================================================
+
+¡Bienvenido a la Plataforma de Generación de Informes!
+
+Este es un sistema modular y extensible para la generación automática de
+documentos basados en plantillas Word, configuraciones YAML y lógica Python.
+
+## 🎯 ¿QUÉ ES ESTA PLATAFORMA?
+
+Una aplicación web (Streamlit) que:
+
+✅ Genera informes profesionales automáticamente
+✅ Se adapta dinámicamente a diferentes tipos de documentos
+✅ UI generada desde configuración YAML (sin código hardcodeado)
+✅ Arquitectura modular: Core + Plugins + UI
+✅ Fácil de extender con nuevos tipos de informes
+
+## 📚 DOCUMENTACIÓN DISPONIBLE
+
+Por favor, lee los siguientes documentos en este orden:
+
+### 1️⃣ GUIA_RAPIDA.md (⚡ EMPIEZA AQUÍ)
+   → Guía visual rápida para empezar en 5 minutos
+   → Uso básico paso a paso
+   → Casos de uso comunes
+
+### 2️⃣ INSTRUCCIONES_INSTALACION.md
+   → Instalación completa paso a paso
+   → Requisitos previos
+   → Solución de problemas
+   → Despliegue en producción
+
+### 3️⃣ README.md
+   → Documentación principal del proyecto
+   → Descripción de la arquitectura
+   → Características principales
+   → Tecnologías utilizadas
+
+### 4️⃣ ESTRUCTURA_PROYECTO.txt
+   → Árbol completo de directorios
+   → Descripción detallada de cada módulo
+   → Flujo de datos
+   → Guía para agregar plugins
+
+### 5️⃣ INDICE_ARCHIVOS.md
+   → Índice completo de archivos
+   → Descripción de cada función
+   → Dependencias entre módulos
+   → Estadísticas del proyecto
+
+## 🚀 INICIO RÁPIDO (3 PASOS)
+
+Si no quieres leer documentación ahora y solo quieres empezar:
+
+1. Instalar dependencias:
+   ```
+   pip install -r requirements.txt
+   ```
+
+2. Ejecutar aplicación:
+   ```
+   streamlit run report_platform/ui/app.py
+   ```
+
+3. Abrir navegador:
+   ```
+   http://localhost:8501
+   ```
+
+¡Eso es todo! La aplicación se abrirá y podrás empezar a generar informes.
+
+## 📂 ESTRUCTURA DE ARCHIVOS
+
+```
+tu_proyecto/
+│
+├── LEEME_PRIMERO.txt              ← ¡Estás aquí!
+├── GUIA_RAPIDA.md                 ← Empieza por aquí
+├── INSTRUCCIONES_INSTALACION.md   ← Instalación detallada
+├── README.md                      ← Documentación principal
+├── ESTRUCTURA_PROYECTO.txt        ← Arquitectura completa
+├── INDICE_ARCHIVOS.md            ← Índice de todos los archivos
+│
+├── requirements.txt               ← Dependencias Python
+│
+└── report_platform/               ← Código del proyecto
+    ├── core/                      ← Núcleo genérico
+    ├── reports/                   ← Plugins de informes
+    └── ui/                        ← Interfaz web
+```
+
+## 🎨 ¿QUÉ INCLUYE ESTE PROYECTO?
+
+### Core (Núcleo Genérico)
+- ✅ Carga de configuración YAML
+- ✅ Motor de condiciones lógicas
+- ✅ Generación dinámica de UI
+- ✅ Motor de renderizado (placeholder)
+- ✅ Validación de datos
+- ✅ Modelos Pydantic
+
+### Plugin: Informe de Auditoría
+- ✅ 70+ campos configurables
+- ✅ Múltiples tipos de opinión
+- ✅ Cuentas consolidadas y abreviadas
+- ✅ Soporte EIP
+- ✅ KAM/AMRA, incertidumbres, énfasis
+- ✅ Bloques de texto adaptativos
+
+### UI (Interfaz)
+- ✅ Streamlit web app
+- ✅ Descubrimiento automático de plugins
+- ✅ Formularios dinámicos
+- ✅ Validación en tiempo real
+- ✅ Descarga de documentos
+
+## 🔧 TECNOLOGÍAS
+
+- Python 3.11+
+- Streamlit (UI web)
+- Pydantic (validación)
+- Jinja2 (templates)
+- PyYAML (configuración)
+- python-docx (Word)
+
+## 🎯 CASOS DE USO
+
+1. **Informes de Auditoría**
+   → Plugin incluido, listo para usar
+
+2. **Otros Informes Profesionales**
+   → Crea tu propio plugin en 4 pasos
+
+3. **Automatización de Documentos**
+   → Cualquier documento repetitivo con plantilla
+
+## 💡 FILOSOFÍA DEL PROYECTO
+
+Este proyecto sigue tres principios fundamentales:
+
+1. **Separación de Responsabilidades**
+   - Core: Funcionalidad genérica
+   - Plugins: Lógica específica
+   - UI: Interfaz adaptativa
+
+2. **Configuración sobre Código**
+   - Todo definido en YAML
+   - UI generada automáticamente
+   - Sin hardcoding
+
+3. **Extensibilidad**
+   - Agregar plugin ≠ modificar core
+   - Detección automática
+   - Arquitectura modular
+
+## 🆘 ¿NECESITAS AYUDA?
+
+### Problemas Comunes
+
+1. **"Module not found"**
+   → Lee INSTRUCCIONES_INSTALACION.md, sección "Solución de Problemas"
+
+2. **"Port already in use"**
+   → Ejecuta: `streamlit run ... --server.port 8502`
+
+3. **Plugin no se carga**
+   → Verifica estructura en ESTRUCTURA_PROYECTO.txt
+
+4. **UI no se actualiza**
+   → Ctrl+Shift+R para limpiar caché
+
+### Dónde Buscar
+
+- **Instalación:** INSTRUCCIONES_INSTALACION.md
+- **Uso básico:** GUIA_RAPIDA.md
+- **Arquitectura:** ESTRUCTURA_PROYECTO.txt
+- **Referencia:** INDICE_ARCHIVOS.md
+
+## 📞 CONTACTO
+
+**Desarrollador:** Jimmy  
+**Organización:** Forvis Mazars España  
+**Email:** [Tu email si lo deseas compartir]
+
+## 📄 LICENCIA
+
+[Definir según tu organización]
+
+## 🎉 ¡EMPECEMOS!
+
+Ahora que tienes una visión general:
+
+1. Lee GUIA_RAPIDA.md para un inicio rápido
+2. Sigue INSTRUCCIONES_INSTALACION.md para instalación completa
+3. Explora ESTRUCTURA_PROYECTO.txt para entender la arquitectura
+4. Consulta INDICE_ARCHIVOS.md como referencia
+
+## 🚀 SIGUIENTE PASO
+
+👉 Abre GUIA_RAPIDA.md para empezar en 5 minutos
+
+---
+
+**¡Disfruta de la Plataforma de Generación de Informes!** 📄✨
+
+==============================================================================
+Última actualización: Diciembre 2024
+Versión: 1.0.0
+==============================================================================
