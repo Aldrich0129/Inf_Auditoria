@@ -65,22 +65,34 @@ def render_long_text_field(field: SimpleField, current_value: Any = None) -> Any
 def render_number_field(field: SimpleField, current_value: Any = None) -> Any:
     """
     Renderiza un campo numérico.
-    
+
     Args:
         field: Definición del campo
         current_value: Valor actual
-    
+
     Returns:
         Valor numérico introducido
     """
-    # Determinar el paso según si hay decimales
-    step = 0.01 if (field.min and isinstance(field.min, float)) else 1
-    
+    # Convertir min/max a float si existen, o dejarlos como None
+    min_val = float(field.min) if field.min is not None else None
+    max_val = float(field.max) if field.max is not None else None
+
+    # Determinar el valor inicial
+    if current_value is not None:
+        initial_value = float(current_value)
+    elif min_val is not None:
+        initial_value = min_val
+    else:
+        initial_value = 0.0
+
+    # Determinar el paso según si hay decimales en min/max
+    step = 0.01 if (min_val and isinstance(field.min, float)) else 1.0
+
     value = st.number_input(
         label=field.nombre,
-        value=float(current_value) if current_value is not None else (field.min or 0.0),
-        min_value=field.min,
-        max_value=field.max,
+        value=initial_value,
+        min_value=min_val,
+        max_value=max_val,
         step=step,
         help=field.ayuda,
         key=f"field_{field.id}"
