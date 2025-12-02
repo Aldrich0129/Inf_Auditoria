@@ -12,6 +12,7 @@ from report_platform.core.schema_models import SimpleField, ConditionalVariable
 from report_platform.core.conditions_engine import evaluate_condition
 from report_platform.core.input_widgets import (
     render_date_input,
+    render_date_group_input,
     render_long_text_input,
     render_number_input,
     render_select_input,
@@ -19,6 +20,84 @@ from report_platform.core.input_widgets import (
 )
 
 logger = setup_logger(__name__)
+
+
+# ==============================================================================
+# IDENTIFICACIÓN DE GRUPOS DE FECHAS
+# ==============================================================================
+
+def identify_date_groups(fields: List[SimpleField]) -> Dict[str, Dict[str, SimpleField]]:
+    """
+    Identifica grupos de campos que deben renderizarse como selectores de fecha.
+
+    Busca campos con:
+    - Mismo valor en el atributo 'grupo'
+    - O campos con IDs que sigan el patrón dia_*, mes_*, ano_* con el mismo sufijo
+
+    Args:
+        fields: Lista de campos
+
+    Returns:
+        Diccionario {group_name: {'dia': field, 'mes': field, 'ano': field}}
+    """
+    date_groups = {}
+
+    # Primero buscar por atributo 'grupo'
+    for field in fields:
+        grupo = getattr(field, 'grupo', None)
+        if grupo:
+            if grupo not in date_groups:
+                date_groups[grupo] = {}
+
+            # Identificar si es dia, mes o ano
+            field_id = field.id
+            if field_id.startswith('dia_'):
+                date_groups[grupo]['dia'] = field
+            elif field_id.startswith('mes_'):
+                date_groups[grupo]['mes'] = field
+            elif field_id.startswith('ano_'):
+                date_groups[grupo]['ano'] = field
+
+    # Filtrar solo grupos que tengan al menos 2 componentes (mes+ano, dia+mes, o dia+mes+ano)
+    valid_groups = {}
+    for group_name, components in date_groups.items():
+        if len(components) >= 2:
+            valid_groups[group_name] = components
+
+    return valid_groups
+
+
+def get_date_group_label(fields_group: Dict[str, SimpleField], config_dir) -> str:
+    """
+    Obtiene la etiqueta para un grupo de fechas desde la configuración.
+
+    Args:
+        fields_group: Grupo de campos de fecha
+        config_dir: Directorio de configuración
+
+    Returns:
+        Etiqueta del grupo o etiqueta por defecto
+    """
+    # Intentar obtener la etiqueta desde la configuración
+    from report_platform.core.config_loader import get_general_config
+
+    # Buscar el nombre del grupo en alguno de los campos
+    group_name = None
+    for field in fields_group.values():
+        group_name = getattr(field, 'grupo', None)
+        if group_name:
+            break
+
+    if group_name:
+        general_config = get_general_config(config_dir)
+        agrupaciones = general_config.get('agrupaciones_fecha', [])
+
+        for agrupacion in agrupaciones:
+            if agrupacion.get('grupo') == group_name:
+                return agrupacion.get('etiqueta', group_name)
+
+    # Etiqueta por defecto
+    return "Fecha"
 
 
 # ==============================================================================
@@ -153,56 +232,110 @@ def should_show_field_in_ui(field: SimpleField, context: Dict[str, Any]) -> bool
     return True
 
 
-def render_section_fields(section_name: str, fields: List[SimpleField], 
-                         context: Dict[str, Any]) -> Dict[str, Any]:
+def render_section_fields(
+    section_name: str,
+    fields: List[SimpleField],
+    context: Dict[str, Any],
+    config_dir=None,
+) -> Dict[str, Any]:
     """
     Renderiza todos los campos de una sección.
-    
+
     Args:
         section_name: Nombre de la sección
         fields: Lista de campos de la sección
         context: Contexto actual
-    
+        config_dir: Directorio de configuración (para obtener etiquetas de grupos)
+
     Returns:
         Diccionario con valores recolectados {field_id: value}
     """
-    st.subheader(section_name)
-    
+    # Solo renderizar subheader si el nombre de sección no está vacío
+    if section_name:
+        st.subheader(section_name)
+
     values = {}
-    
+
+    # Identificar grupos de fechas
+    date_groups = identify_date_groups(fields)
+
+    # Conjunto de IDs de campos que ya se procesaron como parte de un grupo
+    processed_field_ids = set()
+
+    # Renderizar grupos de fechas
+    for group_name, fields_group in date_groups.items():
+        # Verificar si algún campo del grupo debe mostrarse
+        should_show = False
+        for field in fields_group.values():
+            if should_show_field_in_ui(field, context):
+                should_show = True
+                break
+
+        if should_show:
+            # Obtener etiqueta del grupo
+            if config_dir:
+                group_label = get_date_group_label(fields_group, config_dir)
+            else:
+                group_label = "Fecha"
+
+            # Renderizar selector de fecha
+            date_values = render_date_group_input(
+                fields_group,
+                context,
+                group_name,
+                group_label
+            )
+
+            # Agregar valores al contexto
+            values.update(date_values)
+            context.update(date_values)
+
+            # Marcar campos como procesados
+            for field in fields_group.values():
+                processed_field_ids.add(field.id)
+
+    # Renderizar campos individuales que no son parte de grupos
     for field in fields:
+        # Saltar si ya fue procesado como parte de un grupo
+        if field.id in processed_field_ids:
+            continue
+
         # Verificar si debe mostrarse
         if not should_show_field_in_ui(field, context):
             continue
-        
+
         # Renderizar el campo
         value = render_field(field, context.get(field.id))
-        
+
         if value is not None:
             values[field.id] = value
             # Actualizar contexto para campos dependientes
             context[field.id] = value
-    
+
     return values
 
 
-def render_all_fields(fields_by_section: Dict[str, List[SimpleField]], 
-                     sections_order: Optional[List[str]] = None,
-                     initial_context: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+def render_all_fields(
+    fields_by_section: Dict[str, List[SimpleField]],
+    sections_order: Optional[List[str]] = None,
+    initial_context: Optional[Dict[str, Any]] = None,
+    config_dir=None,
+) -> Dict[str, Any]:
     """
     Renderiza todos los campos organizados por secciones.
-    
+
     Args:
         fields_by_section: Diccionario {seccion: [campos]}
         sections_order: Orden de las secciones (opcional)
         initial_context: Contexto inicial con valores
-    
+        config_dir: Directorio de configuración
+
     Returns:
         Diccionario con todos los valores recolectados
     """
     context = initial_context.copy() if initial_context else {}
     all_values = {}
-    
+
     # Determinar orden de secciones
     if sections_order:
         sections = [s for s in sections_order if s in fields_by_section]
@@ -210,20 +343,21 @@ def render_all_fields(fields_by_section: Dict[str, List[SimpleField]],
         sections.extend([s for s in fields_by_section.keys() if s not in sections])
     else:
         sections = list(fields_by_section.keys())
-    
+
     # Renderizar cada sección
     for section in sections:
         if section not in fields_by_section:
             continue
-        
+
         section_values = render_section_fields(
-            section, 
+            section,
             fields_by_section[section],
-            context
+            context,
+            config_dir,
         )
         all_values.update(section_values)
         context.update(section_values)
-    
+
     return all_values
 
 

@@ -265,6 +265,9 @@ def render_simple_fields_section(
     Args:
         plugin_config: Configuración del plugin
         context: Contexto actual con variables condicionales
+        fields: Lista de campos a renderizar (opcional)
+        header_title: Título de la sección
+        default_expanded: Si los expanders deben estar expandidos por defecto
 
     Returns:
         Diccionario con valores de campos
@@ -292,7 +295,7 @@ def render_simple_fields_section(
     else:
         sections = list(fields_by_section.keys())
 
-    # Renderizar campos
+    # Renderizar campos usando render_section_fields que soporta date groups
     all_values = {}
 
     for section in sections:
@@ -300,17 +303,16 @@ def render_simple_fields_section(
             continue
 
         with st.expander(f"📋 {section}", expanded=default_expanded):
-            for field in fields_by_section[section]:
-                # Verificar si debe mostrarse
-                if not should_show_field_in_ui(field, context):
-                    continue
+            # Usar render_section_fields modificado para soportar date groups
+            from report_platform.core.ui_runtime import render_section_fields
 
-                # Renderizar campo
-                value = render_field(field, context.get(field.id))
-
-                if value is not None:
-                    all_values[field.id] = value
-                    context[field.id] = value
+            section_values = render_section_fields(
+                section_name="",  # No mostrar subheader porque ya tenemos el expander
+                fields=fields_by_section[section],
+                context=context,
+                config_dir=config_dir,
+            )
+            all_values.update(section_values)
 
     return all_values
 
@@ -473,11 +475,12 @@ def main():
     # Contexto para seguimiento de valores
     context = dict(st.session_state.form_data)
 
+    # Reorganizar tabs para que Variables simples esté primero, luego Variables condicionales
     tab_simple, tab_cond, tab_tables, tab_files = st.tabs([
-        "Variables simples",
-        "Variables condicionales",
-        "Tablas",
-        "Archivos de configuración",
+        "📝 Variables simples",
+        "⚙️ Variables condicionales",
+        "📊 Tablas",
+        "📁 Archivos",
     ])
 
     with tab_simple:
