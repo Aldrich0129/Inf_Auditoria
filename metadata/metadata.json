@@ -1,0 +1,36 @@
+{
+  "reports": [
+    {
+      "id": "meta_20251201_220843_G5KC3R",
+      "report_id": "informe_auditoria",
+      "report_name": "Informe de Auditoría de Cuentas Anuales",
+      "timestamp": "2025-12-01T22:08:43.149243",
+      "template_version": "1.0.0",
+      "input_data": {
+        "tipo_opinion": "favorable",
+        "nombre_entidad": "Test S.A.",
+        "ano_cierre_ejercicio": 2024
+      },
+      "output_path": "/tmp/test_informe_20240101.docx",
+      "output_filename": "test_informe_20240101.docx",
+      "generated_by": "test_user",
+      "description": "Informe de prueba"
+    },
+    {
+      "id": "meta_20251201_220923_Q0QK4Z",
+      "report_id": "informe_auditoria",
+      "report_name": "Informe de Auditoría de Cuentas Anuales",
+      "timestamp": "2025-12-01T22:09:23.203770",
+      "template_version": "1.0.0",
+      "input_data": {
+        "tipo_opinion": "favorable",
+        "nombre_entidad": "Test S.A.",
+        "ano_cierre_ejercicio": 2024
+      },
+      "output_path": "/tmp/test_informe_20240101.docx",
+      "output_filename": "test_informe_20240101.docx",
+      "generated_by": "test_user",
+      "description": "Informe de prueba"
+    }
+  ]
+}

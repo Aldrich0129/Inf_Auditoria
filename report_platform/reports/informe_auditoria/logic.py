@@ -32,6 +32,9 @@ from typing import Dict, Any, List, Optional
 from jinja2 import Environment, BaseLoader
 import logging
 
+# Importar el evaluador de condiciones del core
+from report_platform.core.conditions_engine import evaluate_condition
+
 # Configuración del logger
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -86,29 +89,17 @@ class BloquesTextoProcessor:
     
     def _evaluar_condicion(self, condicion: str, contexto: Dict[str, Any]) -> bool:
         """
-        Evalúa una condición en el contexto dado.
-        
+        Evalúa una condición en el contexto dado usando el motor del core.
+
         Args:
             condicion: Expresión de condición como string (ej: "tipo_opinion == 'favorable'")
             contexto: Diccionario con las variables del contexto
-        
+
         Returns:
             True si la condición se cumple, False en caso contrario
         """
-        try:
-            # Crear un entorno seguro para eval
-            # Solo permitimos comparaciones básicas
-            safe_dict = {
-                'True': True,
-                'False': False,
-                'None': None,
-                **contexto
-            }
-            resultado = eval(condicion, {"__builtins__": {}}, safe_dict)
-            return bool(resultado)
-        except Exception as e:
-            logger.warning(f"Error evaluando condición '{condicion}': {e}")
-            return False
+        # Usar el evaluador seguro del core (basado en AST)
+        return evaluate_condition(condicion, contexto)
     
     def _renderizar_plantilla(self, plantilla: str, contexto: Dict[str, Any]) -> str:
         """
