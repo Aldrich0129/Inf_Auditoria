@@ -18,6 +18,18 @@ bloques_texto:
   # SECCIÓN: ENCABEZADO Y TÍTULO
   # ============================================================================
 
+  - id: titulo_informe
+    descripcion: "Título deL INFORME, Determina si las cuentas son consolidadas, abreviadas o normales"
+    reglas:
+      - cuando: "tipo_cuentas == 'consolidadas'"
+        plantilla: "Auditoría de Cuentas Anuales Consolidadas emitido por un Auditor Independiente"
+      - cuando: "tipo_cuentas == 'abreviadas'"
+        plantilla: "Auditoría de Cuentas Anuales Abreviadas emitido por un Auditor Independiente"
+      - cuando: "tipo_cuentas == 'normales'"
+        plantilla: "Auditoría de Cuentas Anuales emitido por un Auditor Independiente"
+      - cuando: "True"  # default
+        plantilla: "Auditoría de Cuentas Anuales emitido por un Auditor Independiente"
+
   - id: titulo_tipo_opinion
     descripcion: "Título de la sección de opinión según el tipo"
     reglas:
