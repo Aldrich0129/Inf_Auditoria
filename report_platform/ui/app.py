@@ -257,7 +257,7 @@ def render_simple_fields_section(
     context: Dict[str, Any],
     fields: Optional[List[Any]] = None,
     header_title: str = "📝 Datos del Informe",
-    default_expanded: bool = False,
+    default_expanded: bool = True,
 ) -> Dict[str, Any]:
     """
     Renderiza los campos simples organizados por secciones.
@@ -473,12 +473,22 @@ def main():
     # Contexto para seguimiento de valores
     context = dict(st.session_state.form_data)
 
-    tab_cond, tab_simple, tab_tables, tab_files = st.tabs([
-        "Variables condicionales",
+    tab_simple, tab_cond, tab_tables, tab_files = st.tabs([
         "Variables simples",
+        "Variables condicionales",
         "Tablas",
         "Archivos de configuración",
     ])
+
+    with tab_simple:
+        field_values = render_simple_fields_section(
+            plugin_config,
+            context,
+            fields=global_fields,
+            header_title="📝 Variables simples",
+            default_expanded=True,
+        )
+        context.update(field_values)
 
     with tab_cond:
         cond_values = render_conditional_variables_section(plugin_config, context)
@@ -494,16 +504,6 @@ def main():
                 default_expanded=True,
             )
             context.update(local_values)
-
-    with tab_simple:
-        field_values = render_simple_fields_section(
-            plugin_config,
-            context,
-            fields=global_fields,
-            header_title="📝 Variables simples",
-            default_expanded=False,
-        )
-        context.update(field_values)
 
     with tab_tables:
         table_values = render_tables_section(plugin_config, context)
