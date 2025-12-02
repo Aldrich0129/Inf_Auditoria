@@ -7,7 +7,7 @@ Incluye funcionalidad de metadatos para guardar y cargar configuraciones.
 
 import sys
 from pathlib import Path
-from typing import Dict, Any, Optional
+from typing import Dict, Any, List, Optional
 from datetime import datetime
 
 import streamlit as st
@@ -252,8 +252,13 @@ def render_conditional_variables_section(plugin_config: Dict[str, Any],
     return values
 
 
-def render_simple_fields_section(plugin_config: Dict[str, Any],
-                                 context: Dict[str, Any]) -> Dict[str, Any]:
+def render_simple_fields_section(
+    plugin_config: Dict[str, Any],
+    context: Dict[str, Any],
+    fields: Optional[List[Any]] = None,
+    header_title: str = "📝 Datos del Informe",
+    default_expanded: bool = False,
+) -> Dict[str, Any]:
     """
     Renderiza los campos simples organizados por secciones.
 
@@ -264,9 +269,9 @@ def render_simple_fields_section(plugin_config: Dict[str, Any],
     Returns:
         Diccionario con valores de campos
     """
-    st.header("📝 Datos del Informe")
+    st.header(header_title)
 
-    simple_fields = plugin_config['simple_fields']
+    simple_fields = fields if fields is not None else plugin_config['simple_fields']
 
     if not simple_fields:
         st.info("Este informe no tiene campos simples")
@@ -294,7 +299,7 @@ def render_simple_fields_section(plugin_config: Dict[str, Any],
         if section not in fields_by_section:
             continue
 
-        with st.expander(f"📋 {section}", expanded=False):
+        with st.expander(f"📋 {section}", expanded=default_expanded):
             for field in fields_by_section[section]:
                 # Verificar si debe mostrarse
                 if not should_show_field_in_ui(field, context):
@@ -308,6 +313,30 @@ def render_simple_fields_section(plugin_config: Dict[str, Any],
                     context[field.id] = value
 
     return all_values
+
+
+def render_tables_section(plugin_config: Dict[str, Any], context: Dict[str, Any]) -> Dict[str, Any]:
+    """Renderiza el área de tablas dinámicas."""
+
+    st.header("📊 Tablas dinámicas")
+
+    tables = plugin_config.get('tables') or []
+    values: Dict[str, Any] = {}
+
+    if not tables:
+        st.info("Este informe no tiene tablas configuradas en config/tablas.yaml")
+        return values
+
+    for table in tables:
+        with st.expander(f"📋 {table.nombre}", expanded=True):
+            if table.descripcion:
+                st.write(table.descripcion)
+
+            st.warning(
+                "La captura de datos para tablas dinámicas aún no está implementada en la interfaz"
+            )
+
+    return values
 
 
 # ==============================================================================
@@ -433,6 +462,10 @@ def main():
 
     plugin_config = st.session_state.plugin_config
 
+    simple_fields = plugin_config['simple_fields']
+    local_fields = [f for f in simple_fields if getattr(f, "ambito", "global") == "local"]
+    global_fields = [f for f in simple_fields if f not in local_fields]
+
     # Mostrar indicador si estamos en modo cargar
     if st.session_state.work_mode == 'cargar' and st.session_state.loaded_metadata_id:
         st.info(f"📂 **Modo:** Cargado desde metadatos (ID: {st.session_state.loaded_metadata_id[:20]}...)")
@@ -440,15 +473,65 @@ def main():
     # Contexto para seguimiento de valores
     context = dict(st.session_state.form_data)
 
-    # Renderizar variables condicionales
-    cond_values = render_conditional_variables_section(plugin_config, context)
-    context.update(cond_values)
+    tab_cond, tab_simple, tab_tables, tab_files = st.tabs([
+        "Variables condicionales",
+        "Variables simples",
+        "Tablas",
+        "Archivos de configuración",
+    ])
 
-    st.markdown("---")
+    with tab_cond:
+        cond_values = render_conditional_variables_section(plugin_config, context)
+        context.update(cond_values)
 
-    # Renderizar campos simples
-    field_values = render_simple_fields_section(plugin_config, context)
-    context.update(field_values)
+        if local_fields:
+            st.markdown("---")
+            local_values = render_simple_fields_section(
+                plugin_config,
+                context,
+                fields=local_fields,
+                header_title="🔗 Variables dependientes de condiciones",
+                default_expanded=True,
+            )
+            context.update(local_values)
+
+    with tab_simple:
+        field_values = render_simple_fields_section(
+            plugin_config,
+            context,
+            fields=global_fields,
+            header_title="📝 Variables simples",
+            default_expanded=False,
+        )
+        context.update(field_values)
+
+    with tab_tables:
+        table_values = render_tables_section(plugin_config, context)
+        context.update(table_values)
+
+    with tab_files:
+        st.header("📁 Archivos de configuración del informe")
+        config_dir = plugin_config['config_dir']
+        st.write(f"Directorio de configuración: `{config_dir}`")
+
+        st.markdown("**Carga de YAML detectada:**")
+        st.markdown(
+            f"- `variables_simples.yaml`: { '✅' if plugin_config['simple_fields'] else '⚠️ Sin variables'}"
+        )
+        st.markdown(
+            f"- `variables_condicionales.yaml`: { '✅' if plugin_config['conditional_variables'] else '⚠️ Sin variables'}"
+        )
+        st.markdown(
+            f"- `tablas.yaml`: { '✅' if plugin_config.get('tables') else '⚠️ No hay tablas definidas'}"
+        )
+        st.markdown(
+            f"- `bloques_texto.yaml`: { '✅' if plugin_config['text_blocks'] else '⚠️ No hay bloques configurados'}"
+        )
+
+        st.info(
+            "Cada categoría se muestra en una pestaña independiente."
+            " Si una variable simple es local, solo se mostrará cuando la condición correspondiente esté activa."
+        )
 
     # Guardar datos en sesión
     st.session_state.form_data = context

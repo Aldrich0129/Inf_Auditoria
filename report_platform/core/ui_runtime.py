@@ -73,7 +73,7 @@ def render_number_field(field: SimpleField, current_value: Any = None) -> Any:
     Returns:
         Valor numérico introducido
     """
-    # Convertir min/max a float si existen, o dejarlos como None
+    # Convertir min/max a float si existen
     min_val = float(field.min) if field.min is not None else None
     max_val = float(field.max) if field.max is not None else None
 
@@ -85,18 +85,27 @@ def render_number_field(field: SimpleField, current_value: Any = None) -> Any:
     else:
         initial_value = 0.0
 
-    # Determinar el paso según si hay decimales en min/max
-    step = 0.01 if (min_val and isinstance(field.min, float)) else 1.0
-
-    value = st.number_input(
-        label=field.nombre,
-        value=initial_value,
-        min_value=min_val,
-        max_value=max_val,
-        step=step,
-        help=field.ayuda,
-        key=f"field_{field.id}"
+    # Determinar el paso según si hay decimales en min/max/valor actual
+    has_decimals = any(
+        isinstance(val, float) and not float(val).is_integer()
+        for val in (field.min, field.max, current_value)
     )
+    step = 0.01 if has_decimals else 1.0
+
+    number_input_args = {
+        "label": field.nombre,
+        "value": initial_value,
+        "step": float(step),
+        "help": field.ayuda,
+        "key": f"field_{field.id}",
+    }
+
+    if min_val is not None:
+        number_input_args["min_value"] = min_val
+    if max_val is not None:
+        number_input_args["max_value"] = max_val
+
+    value = st.number_input(**number_input_args)
     return value
 
 
