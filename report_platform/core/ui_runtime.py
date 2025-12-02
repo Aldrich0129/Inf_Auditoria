@@ -7,136 +7,18 @@ definiciones de campos YAML, permitiendo formularios completamente dinámicos.
 
 import streamlit as st
 from typing import Dict, Any, List, Optional
-from datetime import date
 from report_platform.core.utils import setup_logger
 from report_platform.core.schema_models import SimpleField, ConditionalVariable
 from report_platform.core.conditions_engine import evaluate_condition
+from report_platform.core.input_widgets import (
+    render_date_input,
+    render_long_text_input,
+    render_number_input,
+    render_select_input,
+    render_text_input,
+)
 
 logger = setup_logger(__name__)
-
-
-# ==============================================================================
-# GENERACIÓN DE CONTROLES INDIVIDUALES
-# ==============================================================================
-
-def render_text_field(field: SimpleField, current_value: Any = None) -> Any:
-    """
-    Renderiza un campo de texto.
-    
-    Args:
-        field: Definición del campo
-        current_value: Valor actual (para preservar estado)
-    
-    Returns:
-        Valor introducido por el usuario
-    """
-    value = st.text_input(
-        label=field.nombre,
-        value=current_value or "",
-        placeholder=field.placeholder or "",
-        help=field.ayuda,
-        key=f"field_{field.id}"
-    )
-    return value
-
-
-def render_long_text_field(field: SimpleField, current_value: Any = None) -> Any:
-    """
-    Renderiza un campo de texto largo (textarea).
-    
-    Args:
-        field: Definición del campo
-        current_value: Valor actual
-    
-    Returns:
-        Valor introducido por el usuario
-    """
-    value = st.text_area(
-        label=field.nombre,
-        value=current_value or "",
-        placeholder=field.placeholder or "",
-        help=field.ayuda,
-        key=f"field_{field.id}",
-        height=150
-    )
-    return value
-
-
-def render_number_field(field: SimpleField, current_value: Any = None) -> Any:
-    """
-    Renderiza un campo numérico.
-
-    Args:
-        field: Definición del campo
-        current_value: Valor actual
-
-    Returns:
-        Valor numérico introducido
-    """
-    # Convertir min/max a float si existen
-    min_val = float(field.min) if field.min is not None else None
-    max_val = float(field.max) if field.max is not None else None
-
-    # Determinar el valor inicial
-    if current_value is not None:
-        initial_value = float(current_value)
-    elif min_val is not None:
-        initial_value = min_val
-    else:
-        initial_value = 0.0
-
-    # Determinar el paso según si hay decimales en min/max/valor actual
-    has_decimals = any(
-        isinstance(val, float) and not float(val).is_integer()
-        for val in (field.min, field.max, current_value)
-    )
-    step = 0.01 if has_decimals else 1.0
-
-    number_input_args = {
-        "label": field.nombre,
-        "value": initial_value,
-        "step": float(step),
-        "help": field.ayuda,
-        "key": f"field_{field.id}",
-    }
-
-    if min_val is not None:
-        number_input_args["min_value"] = min_val
-    if max_val is not None:
-        number_input_args["max_value"] = max_val
-
-    value = st.number_input(**number_input_args)
-    return value
-
-
-def render_list_field(field: SimpleField, current_value: Any = None) -> Any:
-    """
-    Renderiza un campo de selección (lista).
-    
-    Args:
-        field: Definición del campo
-        current_value: Valor actual
-    
-    Returns:
-        Valor seleccionado
-    """
-    if not field.opciones:
-        st.warning(f"Campo '{field.nombre}' no tiene opciones definidas")
-        return None
-    
-    # Determinar índice por defecto
-    default_index = 0
-    if current_value and current_value in field.opciones:
-        default_index = field.opciones.index(current_value)
-    
-    value = st.selectbox(
-        label=field.nombre,
-        options=field.opciones,
-        index=default_index,
-        help=field.ayuda,
-        key=f"field_{field.id}"
-    )
-    return value
 
 
 # ==============================================================================
@@ -217,21 +99,21 @@ def render_field(field: SimpleField, current_value: Any = None) -> Any:
     Returns:
         Valor introducido por el usuario
     """
-    # Mostrar etiqueta de requerido
-    label_suffix = " *" if field.requerido else ""
-    
     # Renderizar según tipo
     if field.tipo == "texto":
-        return render_text_field(field, current_value)
-    
+        return render_text_input(field, current_value)
+
     elif field.tipo == "texto_largo":
-        return render_long_text_field(field, current_value)
-    
+        return render_long_text_input(field, current_value)
+
     elif field.tipo == "numero":
-        return render_number_field(field, current_value)
-    
+        return render_number_input(field, current_value)
+
     elif field.tipo == "lista":
-        return render_list_field(field, current_value)
+        return render_select_input(field, current_value)
+
+    elif field.tipo == "fecha":
+        return render_date_input(field, current_value)
     
     else:
         st.warning(f"Tipo de campo no soportado: {field.tipo}")
