@@ -137,3 +137,104 @@ def render_date_input(field: SimpleField, current_value: Any = None) -> Optional
         key=f"field_{field.id}",
         format="YYYY-MM-DD",
     )
+
+
+def render_date_group_input(
+    fields_group: dict[str, SimpleField],
+    current_values: dict[str, Any],
+    group_name: str,
+    group_label: str,
+) -> dict[str, Any]:
+    """Renderiza un selector de fecha para un grupo de campos (dia, mes, ano).
+
+    Args:
+        fields_group: Diccionario con claves 'dia', 'mes', 'ano' y sus campos correspondientes
+        current_values: Valores actuales de los campos
+        group_name: Nombre del grupo (para generar key única)
+        group_label: Etiqueta visible para el selector
+
+    Returns:
+        Diccionario con valores de dia, mes, ano extraídos de la fecha seleccionada
+    """
+    # Obtener los IDs de los campos disponibles
+    dia_field = fields_group.get("dia")
+    mes_field = fields_group.get("mes")
+    ano_field = fields_group.get("ano")
+
+    # Construir fecha inicial desde valores actuales
+    initial_date = None
+
+    if dia_field and mes_field and ano_field:
+        dia_val = current_values.get(dia_field.id)
+        mes_val = current_values.get(mes_field.id)
+        ano_val = current_values.get(ano_field.id)
+
+        # Intentar construir fecha desde dia, mes, ano
+        if dia_val and mes_val and ano_val:
+            try:
+                # Mapeo de nombres de meses en español
+                meses_es = {
+                    "enero": 1, "febrero": 2, "marzo": 3, "abril": 4,
+                    "mayo": 5, "junio": 6, "julio": 7, "agosto": 8,
+                    "septiembre": 9, "octubre": 10, "noviembre": 11, "diciembre": 12
+                }
+                mes_num = meses_es.get(str(mes_val).lower(), None)
+                if mes_num:
+                    initial_date = date(int(ano_val), mes_num, int(dia_val))
+            except (ValueError, TypeError):
+                logger.warning(
+                    "No se pudo construir fecha desde %s/%s/%s",
+                    dia_val, mes_val, ano_val
+                )
+    elif mes_field and ano_field:
+        # Solo mes y año, usar primer día del mes
+        mes_val = current_values.get(mes_field.id)
+        ano_val = current_values.get(ano_field.id)
+
+        if mes_val and ano_val:
+            try:
+                meses_es = {
+                    "enero": 1, "febrero": 2, "marzo": 3, "abril": 4,
+                    "mayo": 5, "junio": 6, "julio": 7, "agosto": 8,
+                    "septiembre": 9, "octubre": 10, "noviembre": 11, "diciembre": 12
+                }
+                mes_num = meses_es.get(str(mes_val).lower(), None)
+                if mes_num:
+                    initial_date = date(int(ano_val), mes_num, 1)
+            except (ValueError, TypeError):
+                logger.warning(
+                    "No se pudo construir fecha desde %s/%s",
+                    mes_val, ano_val
+                )
+
+    if initial_date is None:
+        initial_date = date.today()
+
+    # Renderizar selector de fecha
+    selected_date = st.date_input(
+        label=group_label,
+        value=initial_date,
+        help=f"Selecciona la fecha usando el calendario",
+        key=f"date_group_{group_name}",
+        format="DD/MM/YYYY",
+    )
+
+    # Extraer componentes de la fecha
+    result = {}
+
+    # Mapeo inverso de números a nombres de meses
+    meses_nombres = [
+        "enero", "febrero", "marzo", "abril", "mayo", "junio",
+        "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"
+    ]
+
+    if dia_field:
+        result[dia_field.id] = selected_date.day
+
+    if mes_field:
+        result[mes_field.id] = meses_nombres[selected_date.month - 1]
+
+    if ano_field:
+        result[ano_field.id] = selected_date.year
+
+    return result
